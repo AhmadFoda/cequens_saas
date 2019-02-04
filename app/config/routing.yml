@@ -3,6 +3,11 @@ cequens_webhook:
     type:     annotation
     prefix:   /webhook
 
+cequens_api_hlr:
+  resource: "@CequensBundle/Controller/Api/MsisdnController.php"
+  type:     annotation
+  prefix:   /api/msisdn
+
 cequens_api_verify:
     resource: "@CequensBundle/Controller/Api/VerifyController.php"
     type:     annotation
