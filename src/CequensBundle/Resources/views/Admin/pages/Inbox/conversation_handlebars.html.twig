@@ -1,0 +1,118 @@
+{% verbatim %}
+	  <script type="text/x-handlebars-template" id="template-timelineBlock">
+
+
+
+        {{#each messages}}
+
+          <div class="message clearfix">
+           {{#compared this.sender.id "==" ../me}}
+
+
+           <div class="card social-card share  col1 chat-bubble from-me" data-social="item" style="">
+<div class="circle" data-toggle="tooltip" title="" data-container="body" data-original-title="Label">
+</div>
+<div class="card-header clearfix">
+<div class="user-pic">
+<img alt="Profile Image" data-src-retina="{{ this.sender.avatarURL }}" data-src="{{ this.sender.avatarURL }}" src="{{ this.sender.avatarURL }}" width="33" height="33">
+</div>
+<h5>{{ this.sender.customData.full_name }} <p class="small hint-text m-t-5">{{this.sender.id}}</p></h5>
+<h6></h6>
+</div>
+<div class="card-description">
+<p><pre style="white-space:pre-wrap;overflow-wrap:break-wrap;word-wrap:break-word;">{{{this.text.text}}}</pre></p>
+<div class="via"></div>
+</div>
+<div class="card-content"></div>
+											<div class="card-footer clearfix">
+												<div class="time"><time class="timeago" datetime="{{this.createdAt}}">{{this.createdAt}}</time>{{#if this.sentiment }} Sentiment <span class="label">{{ this.sentiment }}</span>{{/if}}</div>
+											</div>
+</div>
+           {{/compared}}
+
+
+
+            {{#compared this.sender.id "!=" ../me}}
+
+             <div class="card social-card share  col1 chat-bubble from-them" data-social="item" style="">
+<div class="circle" data-toggle="tooltip" title="" data-container="body" data-original-title="Label">
+</div>
+<div class="card-header clearfix">
+<div class="user-pic">
+<img alt="Profile Image" data-src-retina="{{ this.sender.avatarURL }}" data-src="{{ this.sender.avatarURL }}" src="{{ this.sender.avatarURL }}" width="33" height="33">
+</div>
+<h5>{{ this.sender.customData.full_name }} <p class="small hint-text m-t-5">{{this.sender.id}}</p></h5>
+<h6></h6>
+</div>
+<div class="card-description">
+<p><pre style="white-space:pre-wrap;overflow-wrap:break-wrap;word-wrap:break-word;">{{{this.text.text}}}</pre></p>
+<div class="via"></div>
+</div>
+<div class="card-content"></div>
+											<div class="card-footer clearfix">
+												<div class="time"><time class="timeago" datetime="{{this.createdAt}}">{{this.createdAt}}</time>{{#if this.sentiment }} Sentiment <span class="label">{{ this.sentiment }}</span>{{/if}}</div>
+											</div>
+</div>
+
+
+           {{/compared}}
+
+           </div>
+
+
+        <!--<div class="timeline-block">
+									<div class="timeline-point small">
+									</div>
+
+									<div class="timeline-content">
+										<div class="card  social-card share full-width">
+											<div class="circle" data-toggle="tooltip" title="Label" data-container="body">
+											</div>
+											<div class="card-header clearfix">
+												<div class="user-pic">
+													<img alt="Profile Image" width="33" height="33" data-src-retina="{{ this.sender.avatarURL }}" data-src="{{ this.sender.avatarURL }}" src="{{ this.sender.avatarURL }}">
+												</div>
+												<h5>{{ this.sender.customData.full_name }} <p class="small hint-text m-t-5">{{this.sender.id}}</p></h5>
+											</div>
+											<div class="card-description">
+												<p><pre style="white-space:pre-wrap;overflow-wrap:break-wrap;word-wrap:break-word;">{{ this.text}}</pre></p>
+												<div class="via"></div>
+											</div>
+											<div class="card-content"></div>
+											<div class="card-footer clearfix">
+												<div class="time">{{#if this.sentiment }} Sentiment <span class="label">{{ this.sentiment }}</span>{{/if}}</div>
+											</div>
+										</div>
+										<div class="event-date">
+											<small class="fs-12 hint-text">{{ this.createdAt }}</small>
+										</div>
+									</div>
+
+								</div>-->
+
+        {{/each }}
+        <div class="message clearfix" >
+
+</div>
+     </script>
+
+     <script type="text/x-handlebars-template" id="template-userInfoBlock">
+     <div class="social-user-profile col-xs-height text-center col-top">
+															<div class="thumbnail-wrapperr d48 circular bordered b-white" style="width: 48px;height: 48px;">
+																<img alt="Avatar" data-src-retina='{{ user.avatarURL }}' data-src='{{ user.avatarURL }}' src='{{ user.avatarURL }}' width="55" height="55">
+															</div>
+															<br>
+															<i class="fa fa-check-circle text-success fs-16 m-t-10"></i>
+														</div>
+														<div class="col-xs-height p-l-20">
+															<h3 class="no-margin p-b-5">{{user.customData.full_name}}</h3>
+															<p class="no-margin fs-16">
+															</p>
+															<p class="hint-text m-t-5 small">
+															Email:<br/>
+															Mobile:{{#compared room.customData.channel_type "==" "rcs"}}{{user.id}}{{/compared}}<br/>
+															FB-Profile ID: {{#compared room.customData.channel_type "==" "facebook"}}{{ user.id }}{{/compared}}
+															</p>
+														</div>
+     </script>
+{% endverbatim %}

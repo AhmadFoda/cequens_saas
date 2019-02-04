@@ -1,0 +1,83 @@
+{% verbatim %}
+	  <script type="text/x-handlebars-template" id="template-appPlatform1">
+	  <div class="alert alert-info" role="alert">
+<p class="pull-left"></p>
+<p>Before you go any further, open up our detailed instructions for creating your Messenger bot.</p>
+</div>
+ <div class="row p-b-15">
+											<div class="col-md-10">
+												<label class="control-label" for="fb_welcome_text">Welcome Text</label>
+												<br/><br/>
+													<textarea id="fb_welcome_text" name="fb_welcome_text" type="text" class="form-control" placeholder="Welcome Text" rows="5" style="height: 150px;"></textarea>
+													<span class="help">Leave this blank and we'll take care of this for you. This will be displayed when your bot is first connected (some platforms) and as a default response.</span>
+											</div>
+										</div>
+										<div class="row p-b-15">
+										<div class="col-md-10">
+											<label class="control-label" for="fb_language">Language</label>
+											<select class="cs-select cs-skin-slide full-width" name="fb_language" id="fb_language" data-init-plugin="cs-select" required>
+												<option value="" selected></option>
+												<option value="1">English</option>
+												<option value="2">Arabic</option>
+											</select>
+										</div>
+									</div>
+									<div class="row p-b-15">
+										<div class="col-md-10">
+										<div class="checkbox check-danger">
+										<input type="checkbox" value="0" id="fb_app_is_advanced">
+											<label for="fb_app_is_advanced">Use own app ? (Advanced)</label>
+</div>
+										</div>
+									</div>
+	  <div class="row fb_advanced p-b-15">
+											<div class="col-md-10">
+												<label class="control-label" for="fb-app-id">Facebook App ID</label>
+												<br/><br/>
+													<input type="text" class="form-control" placeholder="Facebook App ID" id="fb_app_id" name="fb_app_id">
+													<span class="help">Go to the dashboard of your app and you'll see the ID and secret.</span>
+											</div>
+										</div>
+
+										<div class="row fb_advanced p-b-15">
+											<div class="col-md-10">
+												<label class="control-label" for="fb-app-id">Facebook App Secret</label>
+												<br/><br/>
+													<input type="text" class="form-control" placeholder="Facebook App Secret" id="FACEBOOK_APP_SECRET" name="FACEBOOK_APP_SECRET">
+													<span class="help"></span>
+											</div>
+										</div>
+										<div class="row fb_advanced p-b-15">
+											<div class="col-md-10">
+												<label class="control-label" for="fb-app-id">Facebook Page Access Token</label>
+												<br/><br/>
+													<input type="text" class="form-control" placeholder="Facebook Page Access Token" id="FACEBOOK_TOKEN" name="FACEBOOK_TOKEN">
+													<span class="help">After adding Messenger as a product to your app, go into the Messenger product and get the token for the page above under 'Token Generation'.s</span>
+											</div>
+										</div>
+										<div class="row p-b-15">
+										<div class="col-md-10" style="display: none;" id="fb_login_details_pages">
+											<label class="control-label" for="bot_app_channel_lst">Pages</label>
+											<br/><br/>
+											<select class="cs-select cs-skin-slide full-width" name="FACEBOOK_PAGE_ID" id="FACEBOOK_PAGE_ID" data-init-plugin="cs-select" required>
+												<option value="0">Select Page</option>
+
+											</select>
+</div>
+											<div class="col-md-10" id="fb_login_details">
+<br/><br/>
+												<div class="fb-login-button"
+												data-max-rows="1"
+												data-size="large"
+												data-button-type="login_with"
+												data-show-faces="false"
+												data-auto-logout-link="false"
+												data-use-continue-as="false"
+												data-scope="pages_show_list,manage_pages,pages_messaging,pages_messaging_subscriptions"
+												data-onlogin="bot.updateFbstatus()"></div>
+
+											</div>
+										</div>
+										<br>
+     </script>
+{% endverbatim %}

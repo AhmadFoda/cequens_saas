@@ -1,0 +1,306 @@
+{% verbatim  %}
+    <script type="text/x-handlebars-template" id="template-moduleInstance">
+    <li class="no-border no-pad no-margin list-table-col-alt js-step-container">
+        <input type="hidden" class="js-step-module-id" value="{{module_id}}">
+        <input type="hidden" class="js-step-module-instance-id" value="{{module_instance_id}}">
+        <div class="white-area white-area-condensed push-bot-0">
+            <div class="display-table display-table-100">
+                <div class="display-table-cell">
+                    <h5 class="inline no-margin js-step-name"><i class="fa {{#if module_instance_id }}fa-plus{{else}}fa-minus{{/if}} small clickable js-toggle-step-body"></i> <span class="js-step-name-span">{{step_name}}</span></h5> - <p class="inline push-top-1 push-bot-0 line-height-condensed js-step-type_name">{{type_name}}</p>
+                    <span class="pull-right">
+                        <a href="#" class="js-delete-step">Delete</a>
+                    </span>
+                </div>
+            </div>
+            <div class="js-step-details-container">
+                <div class="horizontal-line push-top-2 push-bot-2"></div>
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label>Step Name</label>
+                        <input class="form-control input-contrast js-step-name-input {{# if is_required }}js-required-field{{/if}}" name="step_name" value="{{step_name}}"/>
+                    </div>
+                </div>
+                <div class="js-step-settings-container push-top-1">
+                    <div class="loading-container"> Loading module settings..</div>
+                </div>
+                {{#if module_instance_id }}
+                    <div class="horizontal-line push-top-2 push-bot-1"></div>
+                    <div class="display-table display-table-100">
+                        <div class="display-table-cell text-right">
+                            <button type="button" class="btn btn-sm btn-primary js-save-module-changes">Save Changes</button>
+                        </div>
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+        <br class="all">
+    </li>
+</script>
+    <script type="text/x-handlebars-template" id="template-moduleSettingsInteger">
+    <div class="row push-top-1 js-setting-row"  id="settings_{{id}}">
+        <input type="hidden" class="js-setting-type-id" value="{{id}}">
+        <div class="col-md-12 form-group">
+            <label>{{ label }}</label>
+            <input class="form-control input-contrast js-numeric-integer {{#if is_required }}js-required-field{{/if}}" value="{{ value }}" />
+        </div>
+    </div>
+</script>
+    <script type="text/x-handlebars-template" id="template-moduleSettingsString">
+    <div class="row push-top-1 js-setting-row"  id="settings_{{id}}">
+        <input type="hidden" class="js-setting-type-id" value="{{id}}">
+        <div class="col-md-12 form-group">
+            <label>{{ label }}</label>
+            <input class="form-control input-contrast {{#if is_required }}js-required-field{{/if}}" value="{{ value }}" />
+        </div>
+    </div>
+</script>
+    <script type="text/x-handlebars-template" id="template-moduleSettingsDateTime">
+    <div class="row push-top-1 js-setting-row"  id="settings_{{id}}">
+        <input type="hidden" class="js-setting-type-id" value="{{id}}">
+        <div class="col-md-12 form-group">
+            <label>{{ label }}</label>
+            <input class="form-control input-contrast js-datepicker {{#if is_required }}js-required-field{{/if}}" value="{{ value }}" />
+        </div>
+    </div>
+</script>
+    <script type="text/x-handlebars-template" id="template-moduleSettingsFloat">
+    <div class="row push-top-1 js-setting-row">
+        <input type="hidden" class="js-setting-type-id" value="{{id}}">
+        <div class="col-md-12 form-group">
+            <label>{{ label }}</label>
+            <input class="form-control input-contrast js-numeric-float {{#if is_required }}js-required-field{{/if}}" value="{{ value }}" />
+        </div>
+    </div>
+</script>
+    <script type="text/x-handlebars-template" id="template-moduleSettingsSelect">
+    <div class="row push-top-1 js-setting-row" id="settings_{{id}}">
+        <input type="hidden" class="js-setting-type-id" value="{{id}}">
+        <div class="col-md-12 form-group">
+            <label>{{ label }}</label>
+            <select class="form-control input-contrast {{#if is_required }}js-required-field{{/if}}">
+                {{#each options}}
+                <option {{#compare value ../value }}selected{{/compare}} value="{{ value }}">{{ name }}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+</script>
+    <script type="text/x-handlebars-template" id="template-moduleSettingsMultiSelect">
+    <div class="row push-top-1 js-setting-row" id="settings_{{id}}">
+        <input type="hidden" class="js-setting-type-id" value="{{id}}">
+        <div class="col-md-12 form-group">
+            <label>{{ label }}</label>
+            <select class="form-control input-contrast {{#if is_required }}js-required-field{{/if}}" multiple>
+                {{#each options}}
+                <option {{#isIn value ../value }}selected{{/isIn}} value="{{ value }}">{{ name }}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+</script>
+    <script type="text/x-handlebars-template" id="template-moduleSettingsValueArray">
+    <div class="push-top-2 js-setting-row js-setting-values-row" id="settings_{{id}}">
+        <input type="hidden" class="js-setting-type-id" value="{{id}}">
+        <label>{{ label }}</label>
+        <a href="#" class="js-add-value pull-right"><i class="fa fa-plus"></i> Add Row</a>
+        <div class="js-more-values">
+            <div class="row js-setting-dynamic-row">
+                <div class="col-md-12 form-group" style="margin-bottom: 0px">
+                    <input class="form-control input-contrast {{#if is_required }}js-required-field{{/if}}" value="{{ value }}" name="value" placeholder="Value"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+    <script type="text/x-handlebars-template" id="template-moduleSettingsNameValueArray">
+    <div class="push-top-2 js-setting-row js-setting-keyvalues-row" id="settings_{{id}}">
+        <input type="hidden" class="js-setting-type-id" value="{{id}}">
+        <label>{{ label }}</label>
+        <a href="#" class="js-add-key-value pull-right"><i class="fa fa-plus"></i> Add Row</a>
+        <div class="js-more-key-values">
+            <div class="row js-setting-dynamic-row">
+                <div class="col-md-6 form-group" style="margin-bottom: 0px">
+                    <input class="form-control input-contrast {{#if is_required }}js-required-field{{/if}}" value="{{ key }}" name="key" placeholder="Key"/>
+                </div>
+                <div class="col-md-6 form-group" style="margin-bottom: 0px">
+                    <input class="form-control input-contrast {{#if is_required }}js-required-field{{/if}}" value="{{ value }}" name="value" placeholder="Value"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+    <script type="text/x-handlebars-template" id="template-moduleSettingsNameValueArrayWorkflow">
+        <div class="push-top-2 js-setting-row js-setting-keyvalues-workflow-row">
+            <input type="hidden" class="js-setting-type-id" value="{{id}}">
+            <label>{{ label }}</label>
+            <a href="#" class="js-add-key-value-workflow pull-right"><i class="fa fa-plus"></i> Add Row</a>
+            <div class="js-more-key-values">
+                <div class="row js-setting-dynamic-row">
+                    <div class="col-md-6 form-group" style="margin-bottom: 0px">
+                        <input class="form-control input-contrast {{#if is_required }}js-required-field{{/if}}" value="{{ key }}" name="key" placeholder="Key"/>
+                    </div>
+                    <div class="col-md-6 form-group" style="margin-bottom: 0px">
+                        <label>{{ label }}</label>
+                            <select class="form-control input-contrast {{#if is_required }}js-required-field{{/if}}">
+                                {{#each options}}
+                                <option {{#compare value ../value }}selected{{/compare}} value="{{ value }}">{{ name }}</option>
+                                {{/each}}
+                            </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/x-handlebars-template" id="template-moduleSettingValue">
+    <div class="row push-top-1 js-setting-dynamic-row">
+        <div class="col-md-12">
+            <div class="input-group input-group-custom-btn form-group" style="margin-bottom: 0px">
+                <input class="form-control input-contrast {{#if is_required}}js-required-field{{/if}}" value="{{ value }}" placeholder="Value"/>
+                <div class="input-group-addon bg-transparent">
+                    <a href="#" class="inactive-link js-remove-setting-row"><i class="fa fa-trash"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+    <script type="text/x-handlebars-template" id="template-moduleSettingKeyValue">
+    <div class="row push-top-1 js-setting-dynamic-row">
+        <div class="col-md-6 form-group" style="margin-bottom: 0px">
+            <input class="form-control input-contrast {{#if is_required }}js-required-field{{/if}}" value="{{ key }}" name="key" placeholder="Key"/>
+        </div>
+        <div class="col-md-6 form-group" style="margin-bottom: 0px">
+            <div class="input-group input-group-custom-btn">
+                <input class="form-control input-contrast {{#if is_required }}js-required-field{{/if}}" value="{{ value }}" name="value" placeholder="Value"/>
+                <div class="input-group-addon bg-transparent">
+                    <a href="#" class="inactive-link js-remove-setting-row"><i class="fa fa-trash"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+    <script type="text/x-handlebars-template" id="template-moduleSettingKeyValueWorkflow">
+        <div class="row push-top-1 js-setting-dynamic-row">
+            <div class="col-md-6 form-group" style="margin-bottom: 0px">
+                <input class="form-control input-contrast {{#if is_required }}js-required-field{{/if}}" value="{{ key }}" name="key" placeholder="Key"/>
+            </div>
+            <div class="col-md-6 form-group" style="margin-bottom: 0px">
+                <div class="input-group input-group-custom-btn">
+                    <label>{{ label }}</label>
+                    <select class="form-control input-contrast {{#if is_required }}js-required-field{{/if}}">
+                        {{#each options}}
+                        <option {{#compare value ../value }}selected{{/compare}} value="{{ value }}">{{ name }}</option>
+                        {{/each}}
+                    </select>
+                    <div class="input-group-addon bg-transparent">
+                        <a href="#" class="inactive-link js-remove-setting-row"><i class="fa fa-trash"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/x-handlebars-template" id="template-moduleSettingsSelectAudio">
+        <div class="row push-top-1 js-setting-row">
+            <input type="hidden" class="js-setting-type-id" value="{{id}}">
+            <div class="col-md-12 form-group">
+                <label>{{ label }}</label>
+                <select class="form-control input-contrast {{#if is_required }}js-required-field{{/if}}">
+                    {{#each options}}
+                    <option {{#compare value ../value }}selected{{/compare}} value="{{ value }}">{{ name }}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+    </script>
+    <script type="text/x-handlebars-template" id="template-moduleSettingsSelectModule">
+        <div class="row push-top-1 js-setting-row">
+            <input type="hidden" class="js-setting-type-id" value="{{id}}">
+            <div class="col-md-12 form-group">
+                <label>{{ label }}</label>
+                <select class="form-control input-contrast {{#if is_required }}js-required-field{{/if}}">
+                    {{#each options}}
+                    <option {{#compare value ../value }}selected{{/compare}} value="{{ value }}">{{ name }}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+    </script>
+    <script type="text/x-handlebars-template" id="template-campaignInstance">
+
+        <hr>
+    </script>
+    <script type="text/x-handlebars-template" id="template-connectionInstanceNoInput">
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label><strong>Source</strong></label>
+                <label>{{sourceType}}</label>
+            </div>
+            <div class="col-md-12 form-group">
+                <label><strong>Target</strong></label>
+                <label>{{targetType}}</label>
+            </div>
+        </div>
+     </script>
+    <script type="text/x-handlebars-template" id="template-connectionInstanceInput">
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label><strong>Source</strong></label>
+                <label>{{sourceType}}</label>{{#each options}}
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label>{{ this.workflow_step_label }}</label>
+                <input class="form-control input-contrast" name="workflow_module_instance_setting_id_{{ this.workflow_module_instance_setting_id }}" id="workflow_module_instance_setting_id_{{ this.workflow_module_instance_setting_id }}" type="text" />
+            </div>
+        </div>
+        {{/each }}
+            </div>
+            <div class="col-md-12 form-group">
+                <label><strong>Target</strong></label>
+                <label>{{targetType}}</label>
+            </div>
+            <div class="col-md-12 form-group">
+                <label>Input</label>
+                <select class="form-control input-contrast " id="js-module-connection-input">
+
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="#">#</option>
+                    <option value="*">*</option>
+
+                </select>
+            </div>
+        </div>
+
+     </script>
+    <script type="text/x-handlebars-template" id="template-connectionInstanceBranch">
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label><strong>Source</strong></label>
+                <label>{{sourceType}}</label>{{#each options}}
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label>{{ this.workflow_step_label }}</label>
+                <input class="form-control input-contrast" name="workflow_module_instance_setting_id_{{ this.workflow_module_instance_setting_id }}" id="workflow_module_instance_setting_id_{{ this.workflow_module_instance_setting_id }}" type="text" />
+            </div>
+        </div>
+        {{/each }}
+            </div>
+            <div class="col-md-12 form-group">
+                <label><strong>Target</strong></label>
+                <label>{{targetType}}</label>
+            </div>
+            <div class="col-md-12 form-group">
+                <label>Text</label>
+                <input class="form-control input-contrast" type="text" name="js-module-connection-input" id="js-module-connection-input" />
+            </div>
+        </div>
+
+     </script>
+{% endverbatim %}

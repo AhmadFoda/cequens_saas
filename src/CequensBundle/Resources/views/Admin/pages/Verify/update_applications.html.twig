@@ -1,0 +1,120 @@
+{% extends '@Cequens/Admin/layout.html.twig' %}
+
+{% block content %}
+	<div class="jumbotron m-b-0" data-pages="parallax">
+		<div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+			<div class="inner">
+				<!-- START BREADCRUMB -->
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Portal</a></li>
+					<li class="breadcrumb-item"><a href="{{ path('verify_list_applications') }}">Verify</a></li>
+					<li class="breadcrumb-item active">Create New Application</li>
+				</ol>
+				<!-- END BREADCRUMB -->
+			</div>
+		</div>
+	</div>
+	<div class=" container-fluid   container-fixed-lg ">
+		<!-- START card -->
+		<div class="card card-transparent">
+			<div class="card-header ">
+				<div class="card-title">Separated form layouts
+				</div>
+			</div>
+			<div class="card-block">
+				<div class="row">
+					<div class="col-md-10">
+						<h3>Simple but not simpler, Seperate your forms and create diversified info graphic</h3>
+						<p>Want it to be more Descriptive and User Friendly, We Made it possible, Use Seperated Form
+							Layouts Structure to Presentate your Form Fields.
+						</p>
+						<br>
+						<p class="small hint-text">To Add A full Width Portlet - Class - card-full This can be used in
+							any
+							<br> widget or situation, Highly Recomended on Forms and tables</p>
+						<form role="form" class="form-horizontal" id="frm_verify_update_app" name="frm_verify_update_app" role="form">
+							<input type="hidden" id="hidden_verify_app_id" name="hidden_verify_app_id" value="{{ application.Id }}"/>
+							<input type="hidden" id="input_verify_update_app_token" name="input_verify_update_app_token" value="{{ csrf_token('verify_update_app_token') }}"/>
+							<div class="form-group row">
+								<label class="col-md-3 control-label">General Properties</label>
+								<div class="col-md-9">
+									<p></p>
+									<div class="row">
+										<div class="col-md-10">
+											<label class="control-label" data-selected-val="input_application_token" for="input_application_token">Application Name</label>
+											<input id="input_application_name" name="input_application_name" type="text" class="form-control" placeholder="Application Name" value="{{ application.applicationName }}" required>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-md-10">
+											<label class="control-label" data-selected-val="input_application_token" for="input_application_token">Application Description</label>
+											<textarea id="input_application_description" name="input_application_description" type="text" class="form-control" placeholder="Application Description" rows="3" required>{{ application.applicationDescription }}</textarea>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+
+										<div class="col-md-10">
+											<label class="control-label" data-selected-val="input_application_token" for="input_application_token">Application Token</label>
+											<br>
+											<input type="text" readonly="readonly" value="{{ application.applicationToken }}" id="input_application_token" name="input_application_token" type="text" class="form-control" placeholder="Application Description" rows="3" required/>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% for property in properties %}
+								<div class="form-group row">
+									<label class="col-md-3 control-label">{{ property.group.propertyGroupName }}</label>
+									<div class="col-md-9">
+										<p></p>
+										{% for  groupProperty in property.properties %}
+											<div class="row">
+												<div class="col-md-10">
+													<label class="control-label" data-selected-val="{{ groupProperty.property_value }}" for="{{ groupProperty.property.propertyName }}">{{ groupProperty.property.propertyDisplayName }}</label>
+													<br>
+													{% if groupProperty.property.propertyType == 4 %}
+														<select class="cs-select cs-skin-slide full-width" name="{{ groupProperty.property.propertyName }}" id="{{ groupProperty.property.propertyName }}" >
+															<option value="System Default">System Default</option>
+															<option value="alphanumeric">MyVoice Package - 1</option>
+															<option value="alphabetic">MyVoice Package - 2</option>
+														</select>
+													{% elseif groupProperty.property.propertyType == 1 %}
+														<input value="{{ groupProperty.property_value }}" type="text" class="form-control" placeholder="{{ groupProperty.property.propertyDisplayName }}" id="{{ groupProperty.property.propertyName }}" name="{{ groupProperty.property.propertyName }}">
+														<span class="help">e.g. "Your Cequens Code is {{ '{{' }}pin_code{{ '}}' }}"</span>
+													{% elseif groupProperty.property.propertyType == 2 %}
+														<select class="cs-select cs-skin-slide full-width" name="{{ groupProperty.property.propertyName }}" id="{{ groupProperty.property.propertyName }}" >
+															{% for groupPropertyOption in groupProperty.options %}
+																<option {% if groupProperty.property_value == groupPropertyOption.propertyOptionValue %} selected="selected" {% endif %} value="{{ groupPropertyOption.propertyOptionValue }}">{{ groupPropertyOption.propertyOptionName }}</option>
+															{% endfor %}
+														</select>
+													{% else %}
+
+													{% endif %}
+
+												</div>
+											</div>
+											<br>
+										{% endfor %}
+
+									</div>
+								</div>
+							{% endfor %}
+
+							<br>
+							<button class="btn btn-danger" type="submit" id="btn_update_application" name="btn_update_application">update</button>
+							<a href="{{ path('verify_list_applications') }}" class="btn btn-danger" type="reset" id="btn_cancel_application" name="btn_cancel_application">Cancel</a>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END card -->
+	</div>
+	<!-- END CONTAINER FLUID -->
+
+{% endblock %}
+{% block javascript %}
+	{{ parent() }}
+	<script src="{{ asset('bundles/cequens/js/portal/verify.js') }}"/>
+{% endblock %}

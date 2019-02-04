@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 38</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="animated" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-38">
+            <circle id="Oval-Copy-146" fill="#992D1D" cx="30" cy="30" r="30"></circle>
+            <g id="Page-1-Copy-12" transform="translate(14.000000, 21.000000)" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                <path d="M8.68571429,7.1 C13.1047619,6.8 17.3714286,6.8 21.7904762,7.1 C22.247619,7.1 22.552381,7.4 22.552381,7.85 L22.552381,9.65 C22.552381,10.8500015 23.4666667,11.75 24.6857143,11.75 L28.4952381,11.75 C29.7142857,11.75 30.6285714,10.85 30.6285714,9.65 L30.6285714,7.7 C30.6285714,4.1 27.8857143,1.1 24.2285714,0.8 C18.2857143,0.35 12.4952411,0.35 6.55238248,0.8 C2.74285714,1.25 0,4.25 0,7.85 L0,9.8 C0,11 0.914285714,11.8999985 2.13333333,11.8999985 L5.94285714,11.8999985 C7.16190476,11.8999985 8.07619048,11 8.07619048,9.7999985 L8.07619048,8 C7.92380952,7.55 8.22857143,7.1 8.68571429,7.1 Z" id="Stroke-1"></path>
+                <path d="M9.14285714,21.5 L21.3333333,21.5" id="Stroke-3"></path>
+            </g>
+        </g>
+    </g>
+</svg>

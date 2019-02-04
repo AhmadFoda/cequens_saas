@@ -1,0 +1,268 @@
+{% extends '@Cequens/Admin/layout.html.twig' %}
+
+{% block css %}
+	<link type="text/css" rel="stylesheet" href="{{ asset('bundles/cequens/plugins/jquery-datatable/media/css/dataTables.bootstrap.css') }}"/>
+	<link type="text/css" rel="stylesheet" href="{{ asset('bundles/cequens/plugins/jquery-datatable/extensions/FixedColumns/css/dataTables.fixedColumns.min.css') }}"/>
+	<link media="screen" type="text/css" rel="stylesheet" href="{{ asset('bundles/cequens/plugins/datatables-responsive/css/datatables.responsive.css') }}"/>
+	<link href="{{ asset('bundles/cequens/plugins/dropzone/css/dropzone.css') }}" rel="stylesheet" type="text/css"/>
+	{{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+	<div class="jumbotron" data-pages="parallax">
+		<div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+			<div class="inner">
+				<!-- START BREADCRUMB -->
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Portal</a></li>
+					<li class="breadcrumb-item"><a href="">Settings</a></li>
+					<li class="breadcrumb-item active">Sound Library</li>
+				</ol>
+				<!-- END BREADCRUMB -->
+				<div class="row">
+					<div class="col-xl-7 col-lg-6 ">
+						<!-- START card -->
+						<div class="full-height">
+							<div class="card-block text-center">
+								<img class="image-responsive-height demo-mw-600" src="{{ asset('bundles/cequens/img/demo/tables.jpg') }}" alt="">
+							</div>
+						</div>
+						<!-- END card -->
+					</div>
+					<div class="col-xl-5 col-lg-6 ">
+						<!-- START card -->
+						<div class="card card-transparent">
+							<div class="card-header ">
+								<div class="card-title">Getting started
+								</div>
+							</div>
+							<div class="card-block">
+								<h3>Working with your Sound Library</h3>
+								<p>Manage your recorded Voice Broadcast, SmartDrop, and IVR sound files in your sound
+									library.</p>
+								<br>
+								<button class="btn btn-danger btn-cons">New Sound</button>
+							</div>
+						</div>
+						<!-- END card -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class=" container-fluid   container-fixed-lg">
+		<div class="card card-transparent">
+			<div class="card-header ">
+				<div class="card-title"></div>
+				<div class="pull-right">
+					<div class="col-xs-12">
+						<button type="button" id="upload-new-sound" name="upload-new-sound" class="btn btn-danger btn-cons">
+							<i class="fa fa-plus"></i>
+							Create
+						</button>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="card-block">
+				<ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+					<li class="nav-item">
+						<a class="active" data-toggle="tab" role="tab" data-target="#myLibrary" href="#">My Library</a>
+					</li>
+					<li class="nav-item">
+						<a href="#" data-toggle="tab" role="tab" data-target="#systemLibrary">System Packages</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="myLibrary">
+						<table class="table table-hover demo-table-dynamic table-responsive-block" id="tableWithDynamicRows">
+							<thead>
+							<tr>
+								<th>Name</th>
+								<th>File</th>
+								<th>Language</th>
+								<th>Duration</th>
+								<th>Type</th>
+								<th>Labels</th>
+								<th>Actions</th>
+							</tr>
+							</thead>
+							<tbody>
+							{% for audio in audios %}
+								<tr>
+									<td class="v-align-middle">
+										<p><a href=""> {{ audio.audioFileName }}</a></p>
+									</td>
+									<td class="v-align-middle">
+										<p>0</p>
+									</td>
+									<td class="v-align-middle">
+										<p>0</p>
+									</td>
+									<td class="v-align-middle">
+										<p>{{ audio.audioFileDuration }}</p>
+									</td>
+									<td class="v-align-middle">
+										<p>0</p>
+									</td>
+									<td class="v-align-middle">
+										<p>0</p>
+									</td>
+									<td class="v-align-middle">
+										<p>0</p>
+									</td>
+								</tr>
+							{% endfor %}
+							</tbody>
+						</table>
+					</div>
+					<div class="tab-pane " id="systemLibrary">
+						<table class="table table-hover demo-table-dynamic table-responsive-block" id="tableWithDynamicRows">
+							<thead>
+							<tr>
+								<th>Name</th>
+								<th>Language</th>
+								<th>Type</th>
+								<th>Date</th>
+								<th>Actions</th>
+							</tr>
+							</thead>
+							<tbody>
+
+								<tr>
+									<td class="v-align-middle">
+										<p>Numbers</p>
+									</td>
+									<td class="v-align-middle">
+										<p>English</p>
+									</td>
+									<td class="v-align-middle">
+										<p>System Default</p>
+									</td>
+									<td class="v-align-middle">
+										<p>23-04-2018</p>
+									</td>
+									<td class="v-align-middle">
+										<p>Download</p>
+									</td>
+								</tr>
+								<tr>
+									<td class="v-align-middle">
+										<p>Dates</p>
+									</td>
+									<td class="v-align-middle">
+										<p>English</p>
+									</td>
+									<td class="v-align-middle">
+										<p>System Default</p>
+									</td>
+									<td class="v-align-middle">
+										<p>23-04-2018</p>
+									</td>
+									<td class="v-align-middle">
+										<p>Download</p>
+									</td>
+								</tr>
+								<tr>
+									<td class="v-align-middle">
+										<p>Times</p>
+									</td>
+									<td class="v-align-middle">
+										<p>English</p>
+									</td>
+									<td class="v-align-middle">
+										<p>System Default</p>
+									</td>
+									<td class="v-align-middle">
+										<p>23-04-2018</p>
+									</td>
+									<td class="v-align-middle">
+										<p>Download</p>
+									</td>
+								</tr>
+								<tr>
+									<td class="v-align-middle">
+										<p>Currency</p>
+									</td>
+									<td class="v-align-middle">
+										<p>English</p>
+									</td>
+									<td class="v-align-middle">
+										<p>System Default</p>
+									</td>
+									<td class="v-align-middle">
+										<p>23-04-2018</p>
+									</td>
+									<td class="v-align-middle">
+										<p>Download</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% include ('@Cequens/Admin/pages/AudioLibrary/upload_modal.html.twig') %}
+	</div>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script type="text/javascript" src="{{ asset('bundles/cequens/plugins/dropzone/dropzone.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/cequens/plugins/jquery-datatable/media/js/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/cequens/plugins/jquery-datatable/extensions/TableTools/js/dataTables.tableTools.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/cequens/plugins/jquery-datatable/media/js/dataTables.bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/cequens/plugins/jquery-datatable/extensions/Bootstrap/jquery-datatable-bootstrap.js') }}"></script>
+<script src="{{ asset('bundles/cequens/plugins/datatables-responsive/js/datatables.responsive.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/cequens/plugins/datatables-responsive/js/lodash.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/cequens/js/datatables.js') }}" type="text/javascript"></script>
+<script>
+$(document).ready(function() {
+	Dropzone.autoDiscover = false;
+	var dropzone_default = new Dropzone("#frmUplaodFIle", {
+            url: '{{ path('audiolib_upload_file') }}' ,
+            maxFiles: 1,
+            dictMaxFilesExceeded: 'Only 1 Audio can be uploaded',
+            acceptedFiles: 'audio/*',
+            maxFilesize: 3,  // in Mb
+            addRemoveLinks: true,
+            init: function () {
+                this.on("maxfilesexceeded", function(file) {
+                    this.removeFile(file);
+                });
+                this.on("sending", function(file, xhr, formData) {
+                    // send additional data with the file as POST data if needed.
+                    // formData.append("key", "value");
+                });
+                this.on("success", function(file, response) {
+                    if (response.uploaded)
+                       window.location.reload(true);
+                    	//alert('File Uploaded: ' + response.fileName);
+                });
+            }
+        });
+
+	$('#upload-new-sound').click(function() {
+		var modalElem = $('#modalSlideUp');
+		$('#modalSlideUp').modal('show');
+		modalElem.children('.modal-dialog').addClass('modal-lg');
+	});
+
+	$('#modalSlideUp').on('hidden.bs.modal', function(e){
+        dropzone_default.removeAllFiles();
+    });
+
+	$('#modalSlideUp').on('shown.bs.modal', function(e) {
+
+	});
+
+	$('.cs-select').select2({dropdownParent: $('#modalSlideUp'),minimumResultsForSearch: -1});
+	$('.cs-select').trigger('change');
+
+});
+</script>
+
+{% endblock %}

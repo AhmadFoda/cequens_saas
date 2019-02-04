@@ -1,0 +1,79 @@
+<div class="modal fade slide-up disable-scroll" id="modalSlideUp" tabindex="-1" role="dialog" aria-hidden="false">
+	<div class="modal-dialog ">
+		<div class="modal-content-wrapper">
+			<div class="modal-content">
+				<div class="modal-header clearfix text-left">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						<i class="pg-close fs-14"></i>
+					</button>
+					<h5>Create <span class="semi-bold">Audio</span></h5>
+					<p class="p-b-10"></p>
+				</div>
+				<div class="modal-body">
+					<div class="card card-borderless">
+						<ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+							<li class="nav-item">
+								<a class="active" data-toggle="tab" role="tab" data-target="#audioFile" href="#">Upload
+									an audio file</a>
+							</li>
+							<li class="nav-item">
+								<a href="#" data-toggle="tab" role="tab" data-target="#text2speech">Text to speech</a>
+							</li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane active" id="audioFile">
+								<div class="row column-seperation">
+									<div class="col-lg-12">
+										<form action="/file-upload" id="frmUplaodFIle" class="dropzone no-margin">
+											<div class="fallback">
+												<input id="afile" name="file" type="file" multiple/>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane " id="text2speech">
+								<div class="card card-transparent">
+									<div class="card-block">
+										<div class="row">
+											<div class="col-lg-12">
+												<form action="" id="frmText2Speech" class="form-horizontal" role="form">
+
+
+													<div class="form-group form-group-default">
+														<label>Text</label>
+														<textarea class="form-control" name="password" rows="50" cols="4" style="min-height: 100px;"> </textarea>
+													</div>
+													<br/>
+													<div class="form-group form-group-default">
+														<label>Language</label>
+														<select class="cs-select cs-skin-slide full-width" name="" id="">
+															<option value="numeric">System Default</option>
+															<option value="alphanumeric">MyVoice Package - 1</option>
+															<option value="alphabetic">MyVoice Package - 2</option>
+														</select>
+													</div>
+													<br>
+													<div class="form-group form-group-default">
+														<label>Voice</label>
+														<select class="cs-select cs-skin-slide full-width" name="" id="" >
+															<option value="numeric">System Default</option>
+															<option value="alphanumeric">Man</option>
+															<option value="alphabetic">Woman</option>
+														</select>
+													</div>
+													<br/>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+</div>

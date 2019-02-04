@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 25</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="animated" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-25">
+            <circle id="Oval-Copy-143" fill="#D78612" cx="30" cy="30" r="30"></circle>
+            <g id="Page-1-Copy-7" transform="translate(12.000000, 18.000000)" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                <polyline id="Stroke-1" points="4.5 12.0823529 4.5 0 30 0 30 22.9411765 18.75 22.9411765"></polyline>
+                <path d="M0,26 C0,22.3294118 3,19.2705882 6.6,19.2705882 L13.5,19.2705882" id="Stroke-3"></path>
+                <polyline id="Stroke-5" points="10.5 22.3294118 13.5 19.2705882 10.5 16.2117647"></polyline>
+                <path d="M9,6.57647059 L17.25,13" id="Stroke-7"></path>
+                <path d="M4.5,3.05882353 L9,6.57647059" id="Stroke-9"></path>
+                <path d="M30,3.05882353 L17.25,13" id="Stroke-11"></path>
+                <path d="M30,22.9411765 L21,10.7058824" id="Stroke-13"></path>
+            </g>
+        </g>
+    </g>
+</svg>

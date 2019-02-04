@@ -1,0 +1,67 @@
+cequens_webhook:
+    resource: "@CequensBundle/Controller/Internal/WebhookController.php"
+    type:     annotation
+    prefix:   /webhook
+
+cequens_api_verify:
+    resource: "@CequensBundle/Controller/Api/VerifyController.php"
+    type:     annotation
+    prefix:   /api/verify
+
+cequens_api_app:
+    resource: "@CequensBundle/Controller/Api/AppController.php"
+    type:     annotation
+    prefix:   /api/app
+
+cequens_portal_verify:
+    resource: "@CequensBundle/Controller/VerifyController.php"
+    type:     annotation
+    prefix:   /portal/verify
+
+cequens_portal_workflow:
+    resource: "@CequensBundle/Controller/WorkflowController.php"
+    type:     annotation
+    prefix:   /portal/workflow
+
+cequens_portal_inbox:
+    resource: "@CequensBundle/Controller/InboxController.php"
+    type:     annotation
+    prefix:   /portal/inbox
+
+cequens_portal_bot:
+    resource: "@CequensBundle/Controller/BotController.php"
+    type:     annotation
+    prefix:   /portal/bot
+
+cequens_portal_audiolib:
+    resource: "@CequensBundle/Controller/AudioLibraryController.php"
+    type:     annotation
+    prefix:   /settings/audio
+
+cequens_portal_settings_user:
+  resource: "@CequensBundle/Controller/UserController.php"
+  type:     annotation
+  prefix:   /settings/user
+
+cequens_portal:
+    resource: "@CequensBundle/Controller/DefaultController.php"
+    type:     annotation
+    prefix:   /portal
+
+cequens_restcomm:
+    resource: "@CequensBundle/Controller/Internal/RestcommController.php"
+    type:     annotation
+    prefix:   /restcomm
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+
+fos_oauth_server_authorize:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"

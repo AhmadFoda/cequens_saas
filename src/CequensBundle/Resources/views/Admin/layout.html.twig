@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+{% include('@Cequens/Includes/header.html.twig') %}
+{% block css %}
+
+	<link href="{{ asset('bundles/cequens/plugins/pace/pace-theme-flash.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('bundles/cequens/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('bundles/cequens/plugins/font-awesome/css/font-awesome.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('bundles/cequens/plugins/jquery-scrollbar/jquery.scrollbar.css') }}" rel="stylesheet" type="text/css" media="screen" />
+	<link href="{{ asset('bundles/cequens/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" media="screen" />
+	<link href="{{ asset('bundles/cequens/plugins/switchery/css/switchery.min.css') }}" rel="stylesheet" type="text/css" media="screen" />
+	<link href="{{ asset('bundles/cequens/plugins/nvd3/nv.d3.min.css') }}" rel="stylesheet" type="text/css" media="screen" />
+	<link href="{{ asset('bundles/cequens/plugins/mapplic/css/mapplic.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('bundles/cequens/plugins/rickshaw/rickshaw.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{  asset('bundles/cequens/pages/css/pages-icons.css') }}" rel="stylesheet" type="text/css">
+	<link class="main-stylesheet" href="{{  asset('bundles/cequens/pages/css/themes/corporate.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+</head>
+<body class="fixed-header dashboard menu-behind">
+
+{% include('@Cequens/Includes/nav.html.twig') %}
+
+<!-- START PAGE-CONTAINER -->
+<div class="page-container ">
+    {% include('@Cequens/Includes/top_header.html.twig') %}
+	<div class="page-content-wrapper full-height">
+		<div class="content full-height">
+				{% block content %}{% endblock %}
+		</div>
+		{#<div class=" container-fluid  container-fixed-lg footer">
+			<div class="copyright sm-text-center">
+				<p class="small no-margin pull-left sm-pull-reset">
+					<span class="hint-text">Copyright &copy; 2018 </span>
+					<span class="font-montserrat">Cequens</span>.
+					<span class="hint-text">All rights reserved. </span>
+					<span class="sm-block"><a href="#" class="m-l-10 m-r-10">Terms of use</a> <span class="muted">|</span> <a href="#" class="m-l-10">Privacy Policy</a></span>
+				</p>
+				#}{#<p class="small no-margin pull-right sm-pull-reset">
+					Hand-crafted <span class="hint-text">&amp; made with Love</span>
+				</p>#}{#
+				<div class="clearfix"></div>
+			</div>
+		</div>#}
+	</div>
+
+</div>
+
+<!-- BEGIN VENDOR JS -->
+	<script src="{{ asset('bundles/cequens/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/jquery/jquery-1.11.1.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/modernizr.custom.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/tether/js/tether.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/jquery/jquery-easy.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/jquery-unveil/jquery.unveil.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/jquery-ios-list/jquery.ioslist.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/jquery-actual/jquery.actual.min.js') }}"></script>
+	<script src="{{ asset('bundles/cequens/plugins/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/cequens/plugins/select2/js/select2.full.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/cequens/plugins/classie/classie.js') }}"></script>
+	<script src="{{ asset('bundles/cequens/plugins/switchery/js/switchery.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/nvd3/lib/d3.v3.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/nvd3/nv.d3.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/nvd3/src/utils.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/nvd3/src/tooltip.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/nvd3/src/interactiveLayer.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/nvd3/src/models/axis.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/nvd3/src/models/line.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/nvd3/src/models/lineWithFocusChart.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/mapplic/js/hammer.js') }}"></script>
+	<script src="{{ asset('bundles/cequens/plugins/mapplic/js/jquery.mousewheel.js') }}"></script>
+	<script src="{{ asset('bundles/cequens/plugins/mapplic/js/mapplic.js') }}"></script>
+	<script src="{{ asset('bundles/cequens/plugins/rickshaw/rickshaw.min.js') }}"></script>
+	<script src="{{ asset('bundles/cequens/plugins/jquery-sparkline/jquery.sparkline.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/cequens/plugins/skycons/skycons.js') }}" type="text/javascript"></script>
+	<!-- END VENDOR JS -->
+	<!-- BEGIN CORE TEMPLATE JS -->
+	<script src="{{ asset('bundles/cequens/pages/js/pages.min.js') }}"></script>
+	<!-- END CORE TEMPLATE JS -->
+	<!-- BEGIN PAGE LEVEL JS -->
+	{#<script src="{{ asset('bundles/cequens/js/dashboard.js') }}" type="text/javascript"></script>#}
+<script src="{{ asset('bundles/cequens/js/card.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/cequens/js/scripts.js') }}" type="text/javascript"></script>
+	<script type="text/javascript" src="{{ asset('bundles/cequens/js/handlebars-v4.0.10.js') }}"></script>
+	<script>
+		var applicationBaseUrl = '{{ appBase }}';
+		var assetsBaseUrl = '{{ assetsBase }}';
+		var fappid = '{{ fbappid }}';
+	</script>
+{% block javascript %}
+
+{% endblock %}
+{# Handlebars #}
+{% block handlebar %}{% endblock %}
+<!-- END PAGE LEVEL JS -->
+</body>
+</html>

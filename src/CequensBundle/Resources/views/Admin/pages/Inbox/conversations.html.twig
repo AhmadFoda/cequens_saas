@@ -1,0 +1,186 @@
+{% extends '@Cequens/Admin/layout.html.twig' %}
+
+{% block css %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/cequens/plugins/bootstrap3-wysihtml5/bootstrap3-wysihtml5.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('bundles/cequens/plugins/bootstrap-tag/bootstrap-tagsinput.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('bundles/cequens/plugins/jquery-menuclipper/jquery.menuclipper.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('bundles/cequens/css/jquery.atwho.css') }}" rel="stylesheet" type="text/css"/>
+    <style>
+        .chat-view .chat-bubble {
+            padding: 0px !important;
+        }
+
+        .chat-view .chat-inner {
+            height: calc(100% - 55px);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="full-height">
+        <nav class="secondary-sidebar light">
+            <div class=" m-b-30 m-l-30 m-r-30 hidden-sm-down">
+                <select class="custom-select" id="currentBot" name="currentBot">
+                    <option value="all">Applications</option>
+                    {% for bot in bots %}
+                        <option value="{{ bot.id }}">{{ bot.botName }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <p class="menu-title">Inbox</p>
+            <ul class="main-menu">
+                <li class="active">
+                    <a href="#">
+                        <span class="title"><i class="pg-inbox"></i> Assigned</span>
+                        <span class="badge pull-right assigned_counter">0</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="#">
+                        <span class="title"><i class="pg-folder"></i> Unassigned</span>
+                        <span class="badge pull-right unassigned_counter">0</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="title"><i class="pg-sent"></i> Closed</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="inner-content full-height">
+            <div class="split-view">
+                <div class="split-list">
+                    <div class="row-fluid">
+                        <div class="">
+                            <a class="list-refresh" href="#"><i class="fa fa-refresh"></i></a>
+                        </div>
+                    </div>
+                    <div data-email="list" class="list-view boreded no-top-border">
+
+                    </div>
+                </div>
+                <div data-email="opened" class="split-details">
+                    <div class="no-result">
+                        <h1>No conversation has been selected</h1>
+                    </div>
+                    <div class="view-port clearfix full-height" id="chat" style="background-color: #e7e7e7;width: auto;max-height: 65%;display: none;">
+                        <div class="view chat-view bg-white clearfix">
+                            <div class="navbar navbar-default">
+                                <div class="navbar-inner">
+                                    <div class="view-heading">
+                                        <div class="actions-wrapper menuclipper bg-master-lightest">
+                                            <ul class="actions menuclipper-menu no-margin p-l-20 p-t-5">
+                                                <li class="hidden-lg-up">
+                                                    <a href="#" class="split-list-toggle"><i class="fa fa-angle-left"></i> Unassigned</a>
+                                                </li>
+                                                <li class="">
+                                                    <label class="input-group-text text-info" for="conversationStatus">Status: </label>
+                                                    <select class="custom-select" id="conversationStatus">
+                                                        <option value="open" selected>Open</option>
+                                                        <option value="close">Close</option>
+                                                        <option value="span">Span</option>
+                                                        <option value="duplicate">Duplicate</option>
+                                                    </select>
+                                                </li>
+                                                <li class="">
+                                                    <label class="input-group-text text-info" for="inputGroupSelect01">Assign
+                                                        To: </label>
+                                                    <select class="custom-select" id="inputGroupSelect01">
+                                                        <option selected>K.mohamed</option>
+                                                        <option value="1">Adham (Bot)</option>
+                                                    </select>
+
+                                                </li>
+                                            </ul>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="link text-master inline action p-r-10 pull-right ">
+                                        <i class="pg-more"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="chat-inner">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid p-t-5" style="display: none;" id="sendMessage">
+                        <div class="col-md-12">
+                            <div class="card card-transparent">
+                                <ul class="nav nav-tabs nav-tabs-linetriangle" data-init-reponsive-tabs="dropdownfx">
+                                    <li class="nav-item">
+                                        <a href="#" class="active" data-toggle="tab"
+                                           data-target="#fade1"><span>Chat</span></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-toggle="tab" data-target="#fade3"><span>Insights</span></a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="fade1">
+                                        <div class="row column-seperation">
+                                            <div class="col-lg-12">
+                                                <form class="form" id="sendMessageFromAgent"
+                                                      name="sendMessageFromAgent">
+                                                    <input type="hidden" id="bot_id" value="">
+                                                    <input type="hidden" id="user_id" value="">
+                                                    <div class="form-group basic-textarea">
+                                                        <textarea class="form-control pl-2 my-0"
+                                                                  style="height: 90px;min-height: 90px;"
+                                                                  id="exampleFormControlTextarea2" rows="3"
+                                                                  placeholder="Type your message here..."></textarea>
+                                                    </div>
+                                                    <button type="submit" id="btn_sendMessage"
+                                                            class="btn btn-danger btn-cons btn-animated from-left pg pg-mail">
+                                                        <span>Send</span>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="fade3">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="container-xs-height">
+                                                    <div class="row-xs-height" id="client_details">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block handlebar %}
+    {% include ('@Cequens/Admin/pages/Inbox/conversation_handlebars.html.twig') %}
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script type="text/javascript" src="{{ asset('bundles/cequens/js/inflection.js')}}"></script>
+<script src="{{ asset('bundles/cequens/plugins/bootstrap3-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/cequens/plugins/jquery-menuclipper/jquery.actual.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/cequens/plugins/jquery-menuclipper/jquery.menuclipper.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/cequens/plugins/bootstrap-tag/bootstrap-tagsinput.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/cequens/js/timeline.js') }}" type="text/javascript"></script>
+<script type="text/javascript" src="{{ asset('bundles/cequens/js/handlebars-v4.0.10.js') }}"></script>
+<script src="https://unpkg.com/@pusher/chatkit-client@1.3.1/dist/web/chatkit.js"></script>
+<script src="https://js.pusher.com/4.3/pusher.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+<scrip src="https://unpkg.com/hyperapp@1.2.0/dist/hyperapp.js"></scrip>
+<script src="{{ asset('bundles/cequens/js/jquery.timeago.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/cequens/js/jquery.caret.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/cequens/js/jquery.atwho.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/cequens/js/bootbox.min.js') }}" type="application/javascript"></script>
+<script src="{{ asset('bundles/cequens/pages/js/pages.email.js') }}" type="text/javascript"></script>
+{% endblock %}

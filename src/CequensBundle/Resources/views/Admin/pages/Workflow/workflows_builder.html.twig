@@ -1,0 +1,585 @@
+{% extends '@Cequens/Admin/layout.html.twig' %}
+
+{% block content %}
+	{#<link type="text/css" href="https://d3nawoxjhpwbt3.cloudfront.net/static/css/app.999f7f61c35ed445f9ed864cffb2e131.css" rel="stylesheet" />#}
+
+	<style>
+
+		.jsPlumb-editor-toolbar{
+			display: inline-block;
+			float: left;
+			width: 190px;
+			/*height: 100%;*/
+			text-align: center;
+			/*border: 1px solid #000;*/
+			background-color: #eee;
+			border-right: none;
+			position: absolute;
+			z-index: 1;
+			/*max-height: 500px;*/
+			box-shadow: rgba(200, 223, 245, 0.24) 0px 6px 12px 0px;
+			overflow:inherit;
+			position: absolute;
+			max-height: 400px;
+			/*width: 270px;
+			display: flex;
+			flex-direction: column;
+			flex-shrink: 1;*/
+			/*overflow: auto;*/
+			/*background: rgb(255, 255, 255);*/
+			background: #2d2d3238;
+			/*border-radius: 6px;*/
+			top: 80px;
+			bottom: 30px;
+			left: 0px;
+
+		}
+		.workflow_builder{
+			background-image: -webkit-repeating-radial-gradient(center center, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 100%);
+			background-size: 16px 16px;
+		}
+		.jsPlumb-editor-canvas{
+			display: inline-block;
+			position: relative;
+			float: left;
+			width: 100%;
+			height: 100%;
+			/*border: 1px solid #000;*/
+			overflow: auto;
+			text-align: center;
+			/*background-image: -webkit-repeating-radial-gradient(center center, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 100%);
+			background-size: 16px 16px;*/
+			/*background-image: -moz-linear-gradient(45deg, #666 25%, transparent 25%),
+			-moz-linear-gradient(-45deg, #666 25%, transparent 25%),
+			-moz-linear-gradient(45deg, transparent 75%, #666 75%),
+			-moz-linear-gradient(-45deg, transparent 75%, #666 75%);
+			background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(.25, #666), color-stop(.25, transparent)),
+			-webkit-gradient(linear, 0 0, 100% 100%, color-stop(.25, #666), color-stop(.25, transparent)),
+			-webkit-gradient(linear, 0 100%, 100% 0, color-stop(.75, transparent), color-stop(.75, #666)),
+			-webkit-gradient(linear, 0 0, 100% 100%, color-stop(.75, transparent), color-stop(.75, #666));
+			background-image: -webkit-linear-gradient(45deg, #666 25%, transparent 25%),
+			-webkit-linear-gradient(-45deg, #666 25%, transparent 25%),
+			-webkit-linear-gradient(45deg, transparent 75%, #666 75%),
+			-webkit-linear-gradient(-45deg, transparent 75%, #666 75%);
+			background-image: -o-linear-gradient(45deg, #666 25%, transparent 25%),
+			-o-linear-gradient(-45deg, #666 25%, transparent 25%),
+			-o-linear-gradient(45deg, transparent 75%, #666 75%),
+			-o-linear-gradient(-45deg, transparent 75%, #666 75%);
+			background-image: linear-gradient(45deg, #666 25%, transparent 25%),
+			linear-gradient(-45deg, #666 25%, transparent 25%),
+			linear-gradient(45deg, transparent 75%, #666 75%),
+			linear-gradient(-45deg, transparent 75%, #666 75%);
+			-moz-background-size: 2px 2px;
+			background-size: 2px 2px;
+			-webkit-background-size: 2px 2.1px; !* override value for webkit *!
+			background-position: 0 0, 1px 0, 1px -1px, 0px 1px;*/
+		}
+
+		.jsPlumb-editor-toolbar-title{
+			margin: 0;
+			padding: 0;
+			border-bottom: 1px solid;
+			background-color: #555;
+			width: 100%;
+			color: #FFF;
+		}
+		.jsPlumb-editor-toolbar-list{
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+			overflow-y: auto;
+			height: 100%;
+		}
+		.jsPlumb-editor-toolbar-item{
+			/*border: 3px solid #FFF;
+			background: #DFDFDF;*/
+			margin: 0.5em 0.25em;
+			/*border-radius: 0.5em 0.5em 0.5em 0.5em;
+			box-shadow: 0 0 5px #000;*/
+			/*width: 80%;*/
+		}
+		.jsPlumb-editor-toolbar-item .jsPlumb-editor-module{
+			cursor: pointer;
+			/*border: 1px solid rgb(0, 160, 219);*/
+			/*margin: 5px 10px 5px 9px;*/
+			border-radius: 2px;
+			padding: 1px;
+			display: flex;
+			width: auto;
+			box-sizing: border-box;
+		}
+
+		.jsPlumb-editor-toolbar-item .jsPlumb-editor-module .text-area {
+			flex: 1 0 auto;
+			min-width: 120px;
+			display: flex;
+			flex-direction: column;
+			background: #eff3f7;
+		}
+		.jsPlumb-editor-toolbar .palettes{
+			/*height: -webkit-calc(100vh - 28px - 54px - 50px);*/
+			overflow: auto;
+		}
+		.jsPlumb-editor-toolbar-item .jsPlumb-editor-module .text-area .component-info {
+			background: #fff;
+			padding: 0 8px;
+			padding-left: 13px;
+			position: relative;
+			height: 25px;
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			user-select: none;
+			line-height: 14px;
+			border: 1px solid #666 !important;
+		}
+
+		.jsPlumb-editor-toolbar-item .jsPlumb-editor-module .text-area .component-info .__comp-name{
+			color: #454c4f;
+			font-size: 10px;
+			padding-left: 12px;
+			cursor: pointer;
+		}
+		.jsPlumb-editor-toolbar-item .jsPlumb-editor-module img{
+			/*width: 30%;*/
+			width: 30px;
+			height: 30px;
+		}
+
+		.jsPlumb-editor-module.ui-draggable-dragging{
+			border: 1px solid;
+			width: 80px;
+		}
+
+		.jsPlumb-editor-menubar{
+			display: inline-block;
+			float: left;
+			width: 80%;
+			height: 2em;
+			text-align: center;
+			margin-left: 15%;
+		}
+
+		.jsPlumb-editor-menubar-list{
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		.jsPlumb-editor-menubar-item{
+			display: inline-block;
+			width: auto;
+		}
+		.jsPlumb-editor-menu-button{
+			background-color: transparent;
+			padding: 0 0.25em;
+		}
+
+		.jsPlumb-editor-menu-button span.ss_sprite{
+			padding-bottom: 0;
+			margin: 0 0.25em 0 0;
+		}
+
+		.jsplumb-editor-container.jsplumb-editor-selected-container{
+			opacity: 1;
+			filter:alpha(opacity=100);
+		}
+
+		.jsplumb-editor-container {
+			position:absolute;
+			z-index:4;
+			opacity:0.8;
+			filter:alpha(opacity=80);
+			cursor:move;
+			padding: 0.25em 0.5em;
+
+			/*padding: 1px 0;
+			border-radius: 4px;
+			display: flex;
+			width: auto;
+			min-height: 40px;
+			cursor: -webkit-grab;*/
+		}
+
+		.jsplumb-editor-container .text-area {
+			flex: 1 0 auto;
+			min-width: 120px;
+			display: flex;
+			flex-direction: column;
+			background: #eff3f7;
+			min-width: 180px;
+			border-radius: 2px;
+			max-width: 180px;
+			height: 150px;
+		}
+
+		.jsplumb-editor-container .text-area .component-info {
+			background: #fff;
+			/*padding: 0 8px;
+			padding-left: 13px;*/
+			position: relative;
+			height: 25px;
+			/*display: flex;*/
+			align-items: center;
+			justify-content: flex-start;
+			user-select: none;
+			line-height: 14px;
+		}
+
+		.jsplumb-editor-container .text-area .component-summary {
+			display: block;
+			font-size: 10px;
+			background: #fff;
+			padding: 7.5px 13px;
+			min-height: 45px;
+			z-index: 0;
+			/*box-shadow: 0.5px 1px 2px 0 rgba(0, 0, 0, .1);*/
+		}
+
+		.jsplumb-editor-container .text-area .output-nodes {
+			height: 30px;
+			background-image: linear-gradient(0deg,hsla(0,0%,100%,0),#f5f7fa);
+		}
+
+		/*
+		Set Size of Icons on Editor
+		 */
+		.jsplumb-editor-container img{
+			width: 50px;
+			display: block;
+			margin: auto;
+		}
+		.jsplumb-editor-container label{
+			display: block;
+			margin: 0.25em auto;
+			font-family: sans-serif;
+			font-size: small;
+		}
+
+		.jsplumb-editor-end-point {
+			position:absolute;
+			float:right;
+			width: 30px;
+			height: 30px;
+			background-color: transparent;
+			cursor:pointer;
+			background-image: url("{{ asset('bundles/cequens/img/terminals.png') }}");
+			background-position: 0 91px
+		}
+		.jsplumb-editor-end-point:hover {
+			background-position: 0 30px
+		}
+		.jsplumb-editor-end-point-right {
+			right: -25px;
+			top: 50%;
+			margin-top: -20px;
+		}
+		.jsplumb-editor-end-point-left {
+			left: -25px;
+			top: 50%;
+			margin-top: -20px;
+		}
+		.jsplumb-editor-end-point-top {
+			top: -25px;
+			left: 50%;
+			margin-left: -15px;
+		}
+		.jsplumb-editor-end-point-bottom {
+			bottom: -25px;
+			left: 50%;
+			margin-left: -15px;
+		}
+
+		._jsPlumb_endpoint {
+			z-index:3;
+		}
+
+		.jtk_endpoint {
+			z-index:3;
+		}
+
+		.jsplumb-editor-drag-hover { border:1px dotted red; }
+
+
+		div.jsplumb-editor-container-button {
+			position:absolute;
+			right: 0;
+			top: 0;
+			cursor:pointer;
+			padding-bottom: 0;
+		}
+		.jsplumb-editor-container-button:hover{
+			background-color: #ccc;
+		}
+
+		.jsplumb-editor-connection-label{
+
+		}
+
+		/** End point buttons **/
+		.jsplumb-editor-ep-buttons{
+			position:absolute;
+		}
+		.jsplumb-editor-ep-buttons-right {
+			right: -40px;
+			top: 50%;
+			margin-top: -20px;
+		}
+		.jsplumb-editor-ep-buttons-left {
+			left: -40px;
+			top: 50%;
+			margin-top: -20px;
+		}
+		.jsplumb-editor-ep-buttons-top {
+			top: -40px;
+			left: 50%;
+			margin-left: -15px;
+		}
+		.jsplumb-editor-ep-buttons-bottom {
+			bottom: -40px;
+			left: 50%;
+			margin-left: -15px;
+		}
+
+		.jsplumb-editor-ep-buttons .jsplumb-editor-ep-button{
+			cursor: pointer;
+			height: 16px;
+			margin: 0;
+			padding-bottom: 0;
+			padding-left: 16px;
+			width: 16px;
+		}
+		.jsplumb-editor-ep-buttons .jsplumb-editor-ep-button:hover{
+			background-color: antiquewhite;
+		}
+
+		.markdown-container {
+			height: calc(100vh - 150px);
+			padding: 1.25rem;
+			overflow-y: scroll;
+		}
+
+		._jsPlumb_connector{
+			width: auto !important;
+			height: auto !important;
+		}
+	</style>
+	<link type="text/css" href="{{ asset('bundles/cequens/css/ui-lightness/jquery-ui-1.8.21.custom.css') }}" rel="stylesheet" />
+
+	<div class="jumbotron m-b-0" data-pages="parallax">
+		<div class=" container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0">
+			<div class="inner">
+				<!-- START BREADCRUMB -->
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Portal</a></li>
+					<li class="breadcrumb-item"><a href="{{ path('workflow_list_applications') }}">Workflow</a></li>
+					<li class="breadcrumb-item active">{{ applications.applicationName }}</li>
+				</ol>
+				<!-- END BREADCRUMB -->
+			</div>
+		</div>
+	</div>
+	{#container-fixed-lg#}
+	<div class="container-fluid  bg-white workflow_builder" style="">
+		<div class="row" style="height: calc(-160px + 100vh);" id="demo">
+			<input type="hidden" name="adapter_id" id="adapter_id" value="{{ applications.id }}"/>
+		</div>
+		<br/>
+		<br/>
+		<div class="modal fade slide-right disable-scroll" id="modalSlideLeft" tabindex="-1" role="dialog" aria-hidden="true" >
+			<div class="modal-dialog modal-lg">
+				{#<div class="modal-content-wrapper">#}
+					<div class="modal-content">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
+						</button>
+						<div class="modal-body  col-xs-height p-0" >
+							<ul class="card-header card-borderless nav nav-tabs nav-tabs-simple p-b-0" role="tablist" data-init-reponsive-tabs="dropdownfx">
+								<li class="nav-item">
+									<a class="active" data-toggle="tab" role="tab" data-target="#module_configuration" href="#">Settings</a>
+								</li>
+								<li class="nav-item">
+									<a href="#" data-toggle="tab" role="tab" data-target="#module_configuration_info">Help</a>
+								</li>
+							</ul>
+							<div class="tab-content card-body">
+								<div class="tab-pane active" id="module_configuration">
+
+									<div class="container js_module_details col-middle"></div>
+
+								</div>
+								<div class="tab-pane" id="module_configuration_info">
+									<div class="markdown-container"><h1 id="initiate-call">Initiate Call</h1>
+										<p>Initiate call component makes a single call or bulk outbound calls to Phone numbers or SIP endpoints.</p>
+										<h2 id="options">Options</h2>
+										<ul>
+											<li><h3 id="from-required-">From (required)</h3>
+												<p>Caller Id to display to the recipient of the call.</p>
+											</li>
+											<li><h3 id="to-required-">To (required)</h3>
+												<p>List of phone numbers and SIP endpoints that need to be dialled.</p>
+											</li>
+											<li><h3 id="call-settings">Call Settings</h3>
+												<p>Ring timeout is the time period (in seconds) for which an unanswered call should ring before hanging up.</p>
+												<p>Extra headers can be configured to be sent with all the requests made by Plivo</p>
+											</li>
+										</ul>
+										<h2 id="states">States</h2>
+										<p>Component is set to <code>Answered</code> state. The other states are <code>No Answer</code>, <code>Busy/Rejected</code> and <code>Failed</code>. When a machine detected, the component is set to <code>Voicemail</code> state.</p>
+										<h2 id="variables">Variables</h2>
+										<ul>
+											<li><p><code>uuid</code></p>
+												<p>Unique identifier for the outbound call</p>
+											</li>
+											<li><p><code>to</code></p>
+												<p>Phone numbers or SIP endpoints to call</p>
+											</li>
+											<li><p><code>from</code></p>
+												<p>Caller Id to set on the call</p>
+											</li>
+											<li><p><code>start_time</code></p>
+												<p>Time when the call started</p>
+											</li>
+											<li><p><code>answer_time</code></p>
+												<p>UTC time when the call is answered</p>
+											</li>
+											<li><p><code>end_time</code></p>
+												<p>UTC time when the call ended</p>
+											</li>
+											<li><p><code>direction</code></p>
+												<p>Direction of the call is set to <code>outbound</code></p>
+											</li>
+											<li><p><code>from_iso2</code></p>
+												<p>ISO2 code of the country to which the phone number belongs</p>
+											</li>
+											<li><p><code>from_country</code></p>
+												<p>Country to which the phone number belongs</p>
+											</li>
+											<li><p><code>leg</code></p>
+												<p>The leg of the forwarded call is set to <code>ALeg</code></p>
+											</li>
+											<li><p><code>hangup_cause</code></p>
+												<p>Code of Hangup cause corresponding to the reason for the hangup.</p>
+											</li>
+											<li><p><code>duration</code></p>
+												<p>Duration (in seconds) of the call since the dial</p>
+											</li>
+											<li><p><code>bill_duration</code></p>
+												<p>Duration (in seconds) of the call that is billed</p>
+											</li>
+											<li><p><code>bill_rate</code></p>
+												<p>Rate per unit applicable for the call</p>
+											</li>
+											<li><p><code>bill_amount</code></p>
+												<p>Amount billed for the call</p>
+											</li>
+											<li><p><code>ring_status</code></p>
+												<p>Set to <code>True</code> if the call rings. Allowed Values : <code>True</code>, <code>False</code></p>
+											</li>
+											<li><p><code>voicemail_detected</code></p>
+												<p>Set to ‘true’ if machine is detected in the call</p>
+											</li>
+											<li><p><code>call_status</code></p>
+												<p>Status of the call. Possible values are 'in-progress'</p>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<br>
+							<button type="button" class="btn btn-danger btn-block" id="js-btn-save-module-details">Save</button>
+							<button type="button" class="btn btn-default btn-block" data-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+
+				{#</div>#}
+				<!-- /.modal-content -->
+			</div>
+		</div>
+		<div class="modal fade slide-right" id="modalSlideLeftConnection" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content-wrapper">
+					<div class="modal-content">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
+						</button>
+						<div class="container-xs-height full-height">
+							<div class="row-xs-height">
+								<div class="modal-body col-xs-height p-t-50">
+									<div class="container js_module_connection_details col-xs-height col-middle"></div>
+									<br>
+									<button type="button" class="btn btn-danger btn-block" id="js-btn-save-connection-details" >Save</button>
+									<button type="button" class="btn btn-default btn-block" data-dismiss="modal">Cancel</button>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+		</div>
+		<div class="modal fade slide-right" id="modalSlideLeftTest" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content-wrapper">
+					<div class="modal-content">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
+						</button>
+						<div class="container-xs-height full-height">
+							<div class="row-xs-height">
+								<div class="modal-body col-xs-height p-t-50">
+									<div class="container js_test_flow col-xs-height col-middle">
+										<div class="row push-top-1">
+											<div class="col-md-12 form-group">
+												<label>Destination</label>
+												<input class="form-control input-contrast" id="js-test-flow-destination" name="js-test-flow-destination" value=""/>
+											</div>
+										</div>
+									</div>
+									<br>
+									<button type="button" class="btn btn-danger btn-block" id="js-btn-testFlow" >Test</button>
+									<button type="button" class="btn btn-default btn-block" data-dismiss="modal">Cancel</button>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
+{% block handlebar %}
+	{% include ('@Cequens/Admin/pages/Workflow/workflow_modules_handlebars.html.twig') %}
+{% endblock %}
+{% block javascript %}
+{{ parent() }}
+
+{#<script src="{{ asset('bundles/cequens/js/jsplumb.js') }}"></script>#}
+<script src="{{ asset('bundles/cequens/js/jquery.jsPlumb-1.3.10-all.js') }}"></script>
+
+<script type='text/javascript' src='{{ asset('bundles/cequens/js/springy.js') }}'></script>
+
+<!-- Other libs -->
+<script type="text/javascript" src="{{ asset('bundles/cequens/js/inflection.js')}}"></script>
+<!-- Editor includes -->
+<link type="text/css" href="{{ asset('bundles/cequens/css/sprites/sprite.css') }}" rel="stylesheet" />
+<script type='text/javascript' src='{{ asset('bundles/cequens/js/loadingoverlay.min.js') }}'></script>
+<script type='text/javascript' src='{{ asset('bundles/cequens/js/jsPlumb-Connection.js') }}'></script>
+<script type='text/javascript' src='{{ asset('bundles/cequens/js/jsPlumb-Container.js') }}'></script>
+<script type='text/javascript' src='{{ asset('bundles/cequens/js/jquery.jsPlumb-editor.js') }}'></script>
+<script type='text/javascript' src='{{ asset('bundles/cequens/js/initializer.js') }}'></script>
+{#<script src="{{ asset('bundles/cequens/js/charts.js') }}"/>#}
+{#<script src="{{ asset('bundles/cequens/js/card.js') }}"/>#}
+{#<script src="{{ asset('bundles/cequens/js/portal/verify.js') }}"/>#}
+
+<script>
+
+//jsPlumb.setContainer(document.getElementById("canvas"));
+
+</script>
+{% endblock %}

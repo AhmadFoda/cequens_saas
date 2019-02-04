@@ -1,0 +1,99 @@
+{% extends '@Cequens/Admin/layout.html.twig' %}
+
+{% block content %}
+    <div class="jumbotron m-b-0" data-pages="parallax">
+        <div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+            <div class="inner">
+                <!-- START BREADCRUMB -->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Portal</a></li>
+                    <li class="breadcrumb-item"><a href="">Settings</a></li>
+                    <li class="breadcrumb-item"><a href="{{ path('settings_user_list_all') }}">Users</a></li>
+                    <li class="breadcrumb-item active">Create New User</li>
+                </ol>
+                <!-- END BREADCRUMB -->
+            </div>
+        </div>
+    </div>
+    <div class=" container-fluid   container-fixed-lg bg-white">
+        <!-- START card -->
+        <div class="card card-transparent">
+            <div class="card-header "></div>
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-md-10">
+
+                        <form role="form" class="form-horizontal" id="frm_workflow_create_app"
+                              name="frm_workflow_create_app" role="form">
+                            <input type="hidden" id="input_workflow_create_app_token"
+                                   name="input_workflow_create_app_token"
+                                   value="{{ csrf_token('workflow_create_app_token') }}"/>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">Account Properties</label>
+                                <div class="col-md-9">
+                                    <p></p>
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <input id="username" name="username" type="text"
+                                                   class="form-control" placeholder="Username" value="" required>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+
+                                        <div class="col-md-10">
+                                            <input id="email" name="email" type="email"
+                                                   class="form-control" placeholder="Email" value="" required>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+
+                                        <div class="col-md-10">
+                                            <input id="password" name="password" type="password"
+                                                   class="form-control" placeholder="Password" value="" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">User Details</label>
+                                <div class="col-md-9">
+                                    <p></p>
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <input id="fname" name="fname" type="text"
+                                                   class="form-control" placeholder="First Name" value="" required>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+
+                                        <div class="col-md-10">
+                                            <input id="lname" name="lname" type="text"
+                                                   class="form-control" placeholder="Last Name" value="" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+                            <button class="btn btn-danger" type="submit" id="btn_save_user"
+                                    name="btn_save_user">Save
+                            </button>
+                            <button class="btn btn-danger" type="reset" id="btn_cancel_user"
+                                    name="btn_cancel_user">Cancel
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END card -->
+    </div>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+
+{% endblock %}

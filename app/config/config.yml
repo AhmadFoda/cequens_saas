@@ -1,0 +1,180 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@CequensBundle/Resources/config/services.yml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+    redis.host: 127.0.0.1
+    redis.port: 6379
+
+framework:
+    #esi: ~
+    #translator: { fallbacks: ['%locale%'] }
+    secret: '%secret%'
+    router:
+        resource: '%kernel.project_dir%/app/config/routing.yml'
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    validation: { enable_annotations: true }
+    #serializer: { enable_annotations: true }
+    default_locale: '%locale%'
+    trusted_hosts: ~
+    session:
+        # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id: session.handler.native_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+    fragments: ~
+    http_method_override: true
+    assets: ~
+    php_errors:
+        log: true
+    templating:
+        engines: ['twig']
+    cache:
+      default_redis_provider: 'redis://localhost:6379'
+      pools:
+        app.cache.countries:
+          adapter: cache.adapter.redis
+          public: false
+          default_lifetime: 60
+
+# Twig Configuration
+twig:
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    globals:
+        appBase: '%application_url%'
+        assetsBase: '%assets_url%'
+        fbappid: '%cequens_fb_app_id%'
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver: pdo_mysql
+        host: '%database_host%'
+        port: '%database_port%'
+        dbname: '%database_name%'
+        user: '%database_user%'
+        password: '%database_password%'
+        charset: UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: '%kernel.project_dir%/var/data/data.sqlite'
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #path: '%database_path%'
+
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: '%mailer_transport%'
+    host: '%mailer_host%'
+    username: '%mailer_user%'
+    password: '%mailer_password%'
+    spool: { type: memory }
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: CequensBundle\Entity\User
+    from_email:
+        address: "noreply@cequens.com"
+        sender_name: "No Reply"
+
+fos_oauth_server:
+    db_driver: orm       # Drivers available: orm, mongodb, or propel
+    client_class:        CequensBundle\Entity\Client
+    access_token_class:  CequensBundle\Entity\AccessToken
+    refresh_token_class: CequensBundle\Entity\RefreshToken
+    auth_code_class:     CequensBundle\Entity\AuthCode
+    service:
+        user_provider: fos_user.user_provider
+
+fos_rest:
+    versioning:
+        enabled: true
+        default_version: 'v1.0'
+        guessing_order:
+            - custom_header
+            - query
+        resolvers:
+            query: true # Query parameter: /users?version=v1
+            custom_header: true # X-Accept-Version header
+    body_listener:
+        decoders:
+            json: fos_rest.decoder.json
+            xml: fos_rest.decoder.xml
+    body_converter:
+        enabled: true
+    format_listener:
+        rules:
+            - { path: '^/api', priorities: [ 'json' ], fallback_format: json, prefer_extension: true }
+            - { path: '^/', priorities: [ 'html', '*/*'], fallback_format: json, prefer_extension: true }
+    param_fetcher_listener: true
+    view:
+        view_response_listener: 'force'
+        formats:
+            json: true
+        templating_formats:
+            html: true
+    routing_loader:
+        default_format: json                            # All responses should be JSON formated
+        include_format: false                           # We do not include format in request, so that all responses
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     'demo.cequens.net'
+            port:     5672
+            user:     'cequens'
+            password: 'nopassword'
+            vhost:    '/'
+            lazy:     false
+            connection_timeout: 3
+            read_write_timeout: 3
+
+            # requires php-amqplib v2.4.1+ and PHP5.4+
+            #keepalive: false
+
+            # requires php-amqplib v2.4.1+
+            #heartbeat: 0
+
+            #requires php_sockets.dll
+            #use_socket: true # default false
+    #producers:
+    #    upload_picture:
+    #        connection:       default
+    #        exchange_options: {name: 'upload-picture', type: direct}
+    #        service_alias:    my_app_service # no alias by default
+    consumers:
+        fetch_whatsapp:
+            connection:       default
+            exchange_options: {name: 'cequens.whatsapp', type: topic}
+            queue_options:    {name: 'cequens.whatsapp.incoming'}
+            callback: cequens.whatsapp.consumer
+            qos_options: {prefetch_size: 0, prefetch_count: 1, global: false}
+            idle_timeout: 60
+            idle_timeout_exit_code: 0
+            enable_logger: true
+
+        fetch_facebook:
+            connection:       default
+            exchange_options: {name: 'cequens.fb', type: topic}
+            queue_options:    {name: 'cequens.fb.incoming'}
+            callback: cequens.facebook.consumer
+            qos_options: {prefetch_size: 0, prefetch_count: 1, global: false}
+            idle_timeout: 60
+            idle_timeout_exit_code: 0
+            enable_logger: true
+
+webpack_encore:
+    output_path: "%kernel.root_dir%/../web/build/"

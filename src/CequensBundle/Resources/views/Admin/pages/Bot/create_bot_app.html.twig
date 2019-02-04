@@ -1,0 +1,100 @@
+{% extends '@Cequens/Admin/layout.html.twig' %}
+
+{% block content %}
+	<div id="fb-root"></div>
+	<div class="jumbotron m-b-0" data-pages="parallax">
+		<div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+			<div class="inner">
+				<!-- START BREADCRUMB -->
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Portal</a></li>
+					<li class="breadcrumb-item"><a href="{{ path('bot_list_all') }}">Bots</a></li>
+					<li class="breadcrumb-item active">Create New Application</li>
+				</ol>
+				<!-- END BREADCRUMB -->
+			</div>
+		</div>
+	</div>
+	<div class=" container-fluid   container-fixed-lg bg-white">
+		<!-- START card -->
+		<div class="card card-transparent">
+			<div class="card-header ">
+				<div class="card-title">Application Builder
+				</div>
+			</div>
+			<div class="card-block">
+				<div class="row">
+					<div class="col-md-10">
+						<h3>Build it once and deploy it to multiple messaging platforms instantly!</h3>
+						<p>Create new Application where you connect your application to different messaging platforms, including SMS & Facebook Messenger.</p>
+						<br>
+						<p class="small hint-text"><br></p>
+						<form role="form" class="form-horizontal" id="frm_bot_create_app" name="frm_bot_create_app" role="form">
+							<input type="hidden" id="input_bot_create_app_token" name="input_bot_create_app_token" value="{{ csrf_token('bot_create_app_token') }}"/>
+							<div class="form-group row">
+								<label class="col-md-3 control-label">General Properties</label>
+								<div class="col-md-9">
+									<p></p>
+									<div class="row">
+										<div class="col-md-10">
+											<input id="input_application_name" name="input_application_name" type="text" class="form-control" placeholder="Application Name" value="" required>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+
+										<div class="col-md-10">
+											<textarea id="input_application_description" name="input_application_description" type="text" class="form-control" placeholder="Application Description" rows="5" style="height: 150px;" required></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-3 control-label">Channel Properties</label>
+								<div class="col-md-9">
+									<p></p>
+									<div class="row">
+										<div class="col-md-10">
+											<label class="control-label" for="bot_app_channel_lst">Platform</label>
+											<select class="cs-select cs-skin-slide full-width" name="bot_app_channel_lst" id="bot_app_channel_lst" data-init-plugin="cs-select">
+												<option value="0">Select Platform</option>
+												<option value="1">Facebook Messenger</option>
+												<option value="2" >Twitter DM</option>
+												<option value="3" >WhatsApp</option>
+												<option value="4" >RCS Messenger</option>
+												<option value="5" >Viber</option>
+												<option value="6" >Web Widget</option>
+											</select>
+										</div>
+									</div>
+									<br/>
+									<div id="bot_app_channel_details" name="bot_app_channel_details">
+
+									</div>
+								</div>
+							</div>
+
+							<br>
+							<button class="btn btn-danger" type="submit" id="btn_save_application" name="btn_save_application">Save</button>
+							<button class="btn btn-danger" type="reset" id="btn_cancel_application" name="btn_cancel_application">Cancel</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END card -->
+	</div>
+	<!-- END CONTAINER FLUID -->
+
+{% endblock %}
+
+{% block handlebar %}
+    {% include ('@Cequens/Admin/pages/Bot/create_bot_app_handlebars.html.twig') %}
+{% endblock %}
+
+{% block javascript %}
+	{{ parent() }}
+
+	<script type="text/javascript" src="{{ asset('bundles/cequens/js/handlebars-v4.0.10.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/cequens/js/portal/bot.js') }}"></script>
+{% endblock %}

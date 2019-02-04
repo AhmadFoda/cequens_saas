@@ -1,0 +1,105 @@
+{% extends '@Cequens/Admin/layout.html.twig' %}
+
+{% block css %}
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/cequens/plugins/jquery-datatable/media/css/dataTables.bootstrap.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/cequens/plugins/jquery-datatable/extensions/FixedColumns/css/dataTables.fixedColumns.min.css') }}"/>
+    <link media="screen" type="text/css" rel="stylesheet" href="{{ asset('bundles/cequens/plugins/datatables-responsive/css/datatables.responsive.css') }}"/>
+    {{ parent() }}
+
+{% endblock %}
+
+{% block content %}
+<div class=" container-fluid   container-fixed-lg sm-p-l-0 sm-p-r-0">
+    <div class="inner">
+        <!-- START BREADCRUMB -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Portal</a></li>
+            <li class="breadcrumb-item"><a>Inbox</a></li>
+            <li class="breadcrumb-item active">Users</li>
+        </ol>
+    </div>
+</div>
+
+<div class=" container-fluid  container-fixed-lg">
+    <!-- START card -->
+    <div class="card card-transparent">
+        <div class="card-header ">
+            <div class="card-title">
+            </div>
+            <div class="pull-right">
+                <div class="col-xs-12">
+                   {# <a class="btn btn-danger btn-cons" href="{{ path('bot_create_app') }}">Create New Application</a>#}
+
+                    <select class="custom-select" id="currentBot" name="currentBot">
+                        <option value="all">Applications</option>
+                        {% for bot in bots %}
+                            <option value="1">{{ bot.botName }}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="card-block p-t-5">
+            <table class="table table-hover demo-table-dynamic table-responsive-block dataTable no-footer" id="tableWithDynamicRows">
+                <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Created On</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td class="v-align-middle">
+                            <div class="profile-img-wrapper m-t-5 inline">
+                                <img alt="Profile Image" width="33" height="33" data-src-retina="{{ user.userAvatar }}" data-src="{{ user.userAvatar }}" src="{{ user.userAvatar }}"/>
+
+                            </div>
+                            <div class="inline m-l-10">
+                                <p class="small hint-text m-t-5">{{ user.userFullname }}</p>
+                            </div>
+                        </td>
+                        <td class="v-align-middle">
+                            <p> {{ user.userFname }}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p> {{ user.userLname }}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p> {{ user.userEmail }}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p> {{ user.userMobile }}</p>
+                        </td>
+                        <td class="v-align-middle">
+                            <p> {{ user.createdAt|date('Y-m-d') }}</p>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- END card -->
+</div>
+{% endblock %}
+
+{% block handlebar %}
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script type="text/javascript" src="{{ asset('bundles/cequens/plugins/jquery-datatable/media/js/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/cequens/plugins/jquery-datatable/extensions/TableTools/js/dataTables.tableTools.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/cequens/plugins/jquery-datatable/media/js/dataTables.bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/cequens/plugins/jquery-datatable/extensions/Bootstrap/jquery-datatable-bootstrap.js') }}"></script>
+<script src="{{ asset('bundles/cequens/plugins/datatables-responsive/js/datatables.responsive.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/cequens/plugins/datatables-responsive/js/lodash.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/cequens/js/datatables.js') }}" type="text/javascript"></script>
+{% endblock %}
