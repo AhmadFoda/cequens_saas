@@ -39,8 +39,7 @@ class MsisdnController extends ApiBaseController
         $baseUrl = 'https://cequensnew3ck:A1511Y3u@rest.tyntec.com/nis/v1/gnv?msisdn='.$msisdn;
         $response = \Unirest\Request::get($baseUrl,[],[],'cequensnew3ck','A1511Y3u');
         $this->logger->debug('Response Received From Tyntec API => ',[$response->body]);
-
-        return new JsonResponse(['ok'=>''],200);
+        return new JsonResponse($response->body,200);
     }
 
 }
