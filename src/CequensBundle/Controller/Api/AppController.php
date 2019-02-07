@@ -84,6 +84,21 @@ class AppController extends ApiBaseController
                         $this->cacheService->setSubKey($from . '-' . $to, 'currentStep', $campaign_module_instance->getModuleInstanceId());
                         if ($module->getUiName() == 'waitForResponse') {
                             $sysTemVariables['currentStep'] = $campaign_module_instance->getModuleInstanceId();
+                            $currentStepSettings = $campaign_module_instance->getModuleInstanceSettings();
+                            $currentStepSettingsArray = [];
+                            foreach ($currentStepSettings as $currentStepSetting) {
+                                $name = $currentStepSetting->getModuleSetting()->getName();
+                                $value = $currentStepSetting->getValue();
+                                switch ($name)
+                                {
+                                    case 'expireAfter':
+                                        $currentStepSettingsArray['expireAfter'] = $value;
+                                        break;
+                                    case 'moduleId':
+                                        $currentStepSettingsArray['expireFallback'] = $value;
+                                        break;
+                                }
+                            }
                             $connectionsCurrentStep = $campaign_module_instance->getModuleInstanceConnections();
                             foreach ($connectionsCurrentStep as $connectionCurrentStep) {
                                 $nextModule = $connectionCurrentStep->getTargetModuleInstanceId();
@@ -91,6 +106,9 @@ class AppController extends ApiBaseController
                             $this->logger->debug('Wait For Response Next Module ', [$nextModule]);
                             $nextModuleInstance = $this->getDoctrine()->getRepository('AppBundle:ModuleInstance')->findOneBy(['moduleInstanceId' => $nextModule]);
                             $this->cacheService->setSubKey($from . '-' . $to, 'currentStep', $nextModuleInstance->getModuleInstanceId());
+                            $expire_stamp = date('Y-m-d H:i:s', strtotime("+".$currentStepSettingsArray['expireAfter']." second"));
+                            $this->cacheService->setSubKey($from . '-' . $to, 'expireAfter', $expire_stamp);
+                            $this->cacheService->setSubKey($from . '-' . $to, 'expireFallback', $currentStepSettingsArray['expireFallback']);
                             $result = ['success' => true, 'msg' => 'Flow executed successfully Entering Wait Response State', 'data' => []];
                             $continueExecution = false;
                             break;
