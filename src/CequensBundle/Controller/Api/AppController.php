@@ -94,7 +94,7 @@ class AppController extends ApiBaseController
                                     case 'expireAfter':
                                         $currentStepSettingsArray['expireAfter'] = $value;
                                         break;
-                                    case 'moduleId':
+                                    case 'moduleId' :
                                         $currentStepSettingsArray['expireFallback'] = $value;
                                         break;
                                 }
