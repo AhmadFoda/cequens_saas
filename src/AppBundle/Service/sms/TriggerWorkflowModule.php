@@ -26,6 +26,7 @@ class TriggerWorkflowModule
     private $variables;
     private $sessionId;
     private $restcommService;
+    private $cacheService;
 
     /**
      * TriggerWorkflowModule constructor.
@@ -39,6 +40,7 @@ class TriggerWorkflowModule
         $this->collectedInputs = $collectedInputs;
         $this->variables = [];
         $this->restcommService = $restcommService;
+        $this->cacheService = $this->container->get('CequensBundle\Service\CacheService');
     }
 
     /**
@@ -115,9 +117,9 @@ class TriggerWorkflowModule
             $moduleId
         );
         $this->container->get('logger')->debug('CallingRestcommService',[$result]);
-        //if (array_key_exists('sid', $result)) {
-            //$this->cacheService->addCapturedDigitsToCache($result['sid']);
-        //}
+        if (array_key_exists('sid', $result)) {
+            $this->cacheService->addCapturedDigitsToCache($result['sid']);
+        }
         //}
         //}
         //}
