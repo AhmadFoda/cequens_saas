@@ -2,6 +2,7 @@
 
 namespace CequensBundle\Controller\Api;
 
+use CequensBundle\Entity\TriggeredKeys;
 use CequensBundle\Service\CacheService;
 use CequensBundle\Service\RestcommService;
 use OAuth2\OAuth2Exception;
@@ -109,6 +110,12 @@ class AppController extends ApiBaseController
                             $expire_stamp = date('Y-m-d H:i:s', strtotime("+".$currentStepSettingsArray['expireAfter']." second"));
                             $this->cacheService->setSubKey($from . '-' . $to, 'expireAfter', $expire_stamp);
                             $this->cacheService->setSubKey($from . '-' . $to, 'expireFallback', $currentStepSettingsArray['expireFallback']);
+                            $triggeredKeys = new TriggeredKeys();
+                            $triggeredKeys->setTriggerKey($from . '-' . $to);
+                            $triggeredKeys->setTriggerStatus(0);
+                            $triggeredKeys->setTriggerType('sms');
+                            $this->getDoctrine()->getManager()->persist($triggeredKeys);
+                            $this->getDoctrine()->getManager()->flush();
                             $result = ['success' => true, 'msg' => 'Flow executed successfully Entering Wait Response State', 'data' => []];
                             $continueExecution = false;
                             break;
