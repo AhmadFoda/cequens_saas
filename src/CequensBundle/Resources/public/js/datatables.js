@@ -14,6 +14,37 @@
         phone: 480
     };
 
+    $.fn.toggleMask = function() {
+
+        this.each(function() {
+            if ($(this).hasClass('masked')) {
+                $(this).text($(this).attr('origValue'));
+                $(this).removeClass('masked');
+                var link = $(this).next();
+                link.removeClass('fa-eye');
+                link.addClass('fa-eye-slash');
+                link.text(link.text().replace(/Show/,'Hide'));
+            }
+            else {
+                $(this).attr('origValue', $(this).text());
+                $(this).text(new Array($(this).text().length).join('•'));
+                $(this).addClass('masked');
+                var link = $(this).next();
+                link.removeClass('fa-eye-slash');
+                link.addClass('fa-eye');
+                link.text(link.text().replace(/Hide/,'Show'));
+            }
+        });
+
+        return this;
+    };
+
+    $('.mask').toggleMask();
+    $('i.toggleToken').click(function() {
+        $(this).prev().toggleMask();
+        return false;
+    });
+
     // Initialize datatable showing a search box at the top right corner
     var initTableWithSearch = function() {
         var table = $('#tableWithSearch');
@@ -135,36 +166,6 @@
     initTableWithSearch();
     initTableWithDynamicRows();
     initTableWithExportOptions();
-    $.fn.toggleMask = function() {
-
-        this.each(function() {
-            if ($(this).hasClass('masked')) {
-                $(this).text($(this).attr('origValue'));
-                $(this).removeClass('masked');
-                var link = $(this).next();
-                link.removeClass('fa-eye');
-                link.addClass('fa-eye-slash');
-                link.text(link.text().replace(/Show/,'Hide'));
-            }
-            else {
-                $(this).attr('origValue', $(this).text());
-                $(this).text(new Array($(this).text().length).join('•'));
-                $(this).addClass('masked');
-                var link = $(this).next();
-                link.removeClass('fa-eye-slash');
-                link.addClass('fa-eye');
-                link.text(link.text().replace(/Hide/,'Show'));
-            }
-        });
-
-        return this;
-    };
-
-    $('.mask').toggleMask();
-    $('i.toggleToken').click(function() {
-        $(this).prev().toggleMask();
-        return false;
-    });
 
 
 })(window.jQuery);
