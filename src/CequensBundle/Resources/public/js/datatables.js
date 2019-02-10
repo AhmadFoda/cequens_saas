@@ -87,6 +87,11 @@
 
         table.dataTable(settings);
 
+        // search box for table
+        $('#search-table').keyup(function() {
+            table.fnFilter($(this).val());
+        });
+
         $('#show-modal').click(function() {
             $('#addNewAppModal').modal('show');
         });

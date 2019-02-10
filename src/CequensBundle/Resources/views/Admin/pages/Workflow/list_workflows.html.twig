@@ -37,7 +37,7 @@
 								<h3>Flow Builder Designed for future communication, engineered for reliability</h3>
 								<p>The power of our Voice and SMS solutions at your fingertips, without writing a single line of code.</p>
 								<br>
-								<button class="btn btn-danger btn-cons">Start Building</button>
+								<a class="btn btn-danger btn-cons" href="{{ path('workflow_create') }}">Start Building</a>
 							</div>
 						</div>
 						<!-- END card -->
@@ -49,13 +49,17 @@
 
 	<div class=" container-fluid   container-fixed-lg">
 		<!-- START card -->
+		<div class="col-xs-12">
+
+		</div>
 		<div class="card card-transparent">
 			<div class="card-header ">
 				<div class="card-title">YOUR APPLICATIONS</div>
 				<div class="pull-right">
 					<div class="col-xs-12">
-						<a class="btn btn-danger btn-cons" href="{{ path('workflow_create') }}"><i class="fa fa-plus"></i> Create</a>
+						<input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
 					</div>
+
 				</div>
 				<div class="clearfix"></div>
 			</div>
