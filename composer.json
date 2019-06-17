@@ -37,8 +37,7 @@
         "symfony/swiftmailer-bundle": "^2.6.4",
         "symfony/symfony": "3.4.*",
         "symfony/webpack-encore-bundle": "^1.0",
-        "twig/twig": "^1.0||^2.0",
-        "ext-redis": "*"
+        "twig/twig": "^1.0||^2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
