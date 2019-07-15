@@ -23,7 +23,7 @@
          * ============================================================ */
 
         // Load chart data
-        d3.json('http://localhost:8000/bundles/cequens/js/charts.json', function(data) {
+        d3.json('https://workflow.cequens.net/bundles/cequens/js/charts.json', function(data) {
 
             (function() {
 

@@ -243,17 +243,24 @@ class InboxController extends Controller
      */
     public function sendMessageAction(Request $request)
     {
+        $this->logger->debug('SENDING new message action');
         $room_id = $request->request->get('roome_id');
         $message = $request->request->get('message');
         $room_name = $request->request->get('room_name');
         $sender_id = 'k.mohamed@cequens.com';
+
+            $this->logger->debug('$this->getParameter(\'chatkit_instance_locator\') '.$this->getParameter('chatkit_instance_locator'));
+            $this->logger->debug('$this->getParameter(\'chatkit_key\') '.$this->getParameter('chatkit_instance_locator'));
+
         $chatkit = new Chatkit(
             [
-                'instance_locator' => $this->getParameter('chatkit_instance_locator'),
-                'key' => $this->getParameter('chatkit_key'),
+                'instance_locator' => "v1:us1:bb957f41-bf24-4f23-a015-1f51ceafb1zb2",
+                'key' => "4761b4a1-d6ab-4d1b-84a7-77ee60a8fd65:CT1s0rd3kg5UZ7uikF8KMN4baerPur9+/CfeF2WLt6E=",
             ]
         );
+        $this->logger->debug('getting room'.$room_id);
         $room = $chatkit->getRoom(['id' => $room_id]);
+        $this->logger->debug('running '.$room_id);
         if ($room['status'] == 200) {
             $this->logger->debug('Rooooooom Info', array($room['body']['custom_data']['botId']));
             $chatkit->sendMessage(
