@@ -8,8 +8,6 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    redis.host: 127.0.0.1
-    redis.port: 6379
 
 framework:
     #esi: ~
@@ -36,12 +34,8 @@ framework:
     templating:
         engines: ['twig']
     cache:
-      default_redis_provider: 'redis://localhost:6379'
       pools:
-        app.cache.countries:
-          adapter: cache.adapter.redis
-          public: false
-          default_lifetime: 60
+
 
 # Twig Configuration
 twig:
