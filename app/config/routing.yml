@@ -7,7 +7,7 @@ cequens_api_hlr:
   resource: "@CequensBundle/Controller/Api/MsisdnController.php"
   type:     annotation
   prefix:   /api/msisdn
-app
+
 cequens_api_verify:
     resource: "@CequensBundle/Controller/Api/VerifyController.php"
     type:     annotation
