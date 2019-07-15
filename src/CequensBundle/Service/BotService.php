@@ -9,6 +9,7 @@
 namespace CequensBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -17,7 +18,7 @@ class BotService
     protected $entityManager;
     protected $validator;
     protected $container;
-
+    protected $logger ;
     /**
      * WorkflowService constructor.
      *
@@ -26,12 +27,14 @@ class BotService
     public function __construct(
         EntityManagerInterface $entityManager,
         ValidatorInterface $validator,
-        ContainerInterface $container
+        ContainerInterface $container,
+        LoggerInterface $logger
     )
     {
         $this->entityManager = $entityManager;
         $this->validator = $validator;
         $this->container = $container;
+        $this->logger = $logger;
     }
 
     public function createNewBot($userId, $botName, $botDescription, $botType)
@@ -76,6 +79,7 @@ class BotService
 
     public function sendMessage($botId, $to, $message)
     {
+        $this->logger->debug('SENDING new message action');
         $this->postToApis(
             $this->container->getParameter('bot_service_url') . '/internal/message',
             [

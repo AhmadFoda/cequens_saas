@@ -228,7 +228,7 @@ $(function () {
                         room_name: self.variables.state.current_room_obj.name.substr(3)
                     },
                     dataType: 'json',
-                     cache: false,
+                    cache: false,
                     timeout: 120000,
                     success: function (response) {
                         if (response.success) {
