@@ -244,7 +244,7 @@ $(function () {
                         }
                     },
                     error: function (response) {
-                        console.log('Error while sending msg');
+                        console.log('Error while sending msg '+JSON.stringify(response));
                         $('textarea#exampleFormControlTextarea2').removeAttr('disabled');
                         $('#btn_sendMessage').removeAttr('disabled');
                         $('textarea#exampleFormControlTextarea2').val('');
