@@ -253,7 +253,9 @@ class InboxController extends Controller
                 'key' => $this->getParameter('chatkit_key'),
             ]
         );
+        $this->logger->debug('[InboxController] getting room by id '.$room_id);
         $room = $chatkit->getRoom(['id' => $room_id]);
+        $chatkit->setLogger($this->logger);
         if ($room['status'] == 200) {
             $this->logger->debug('Rooooooom Info', array($room['body']['custom_data']['botId']));
             $chatkit->sendMessage(
