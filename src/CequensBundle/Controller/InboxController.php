@@ -256,6 +256,8 @@ class InboxController extends Controller
                 'key' => $this->getParameter('chatkit_key'),
             ]
         );
+        $this->botService->sendMessage('2010', $room_name, $message);
+
         $chatkit->sendMessage([
             'sender_id' => '2010',
             'room_id' => $room_id,
