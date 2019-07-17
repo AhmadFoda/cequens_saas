@@ -245,7 +245,7 @@ class InboxController extends Controller
     {
         $room_id = $request->request->get('roome_id');
         $message = $request->request->get('message');
-        $room_name = $request->request->get('room_name');
+        $room_name = '-01';
         $this->logger->debug('[InboxController] $room_id '.$room_id);
         $this->logger->debug('[InboxController] $message '.$message);
         $this->logger->debug('[InboxController] $room_name '.$room_name);
