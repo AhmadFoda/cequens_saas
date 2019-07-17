@@ -250,6 +250,10 @@ class InboxController extends Controller
         $this->logger->debug('[InboxController] $message '.$message);
         $this->logger->debug('[InboxController] $room_name '.$room_name);
         $sender_id = 'k.mohamed@cequens.com';
+        $this->logger->debug('sending to bot engine');
+        $this->botService->sendMessage('2010', $room_name, $message);
+//
+        exit;
         $chatkit = new Chatkit(
             [
                 'instance_locator' => $this->getParameter('chatkit_instance_locator'),
