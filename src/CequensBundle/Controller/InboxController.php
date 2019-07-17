@@ -256,23 +256,28 @@ class InboxController extends Controller
                 'key' => $this->getParameter('chatkit_key'),
             ]
         );
+        $chatkit->sendMessage([
+            'sender_id' => '2010',
+            'room_id' => $room_id,
+            'text' => $message
+        ]);
         $this->logger->debug('[InboxController] getting room by id '.$room_id);
+        $this->botService->sendMessage('2010', $room_name, $message);
 
-        $room = $chatkit->getRoom(['id' => $room_id]);
+//        $room = $chatkit->getRoom(['id' => $room_id]);
 
-        if ($room['status'] == 200) {
-            $this->logger->debug('Rooooooom Info', array($room['body']['custom_data']['botId']));
-            $chatkit->sendMessage(
-                [
-                    'sender_id' => $sender_id,
-                    'room_id' => $room_id,
-                    'text' => json_encode(['nlp' => [], 'type' => 'text', 'text' => $message], JSON_UNESCAPED_UNICODE),
-                    'bot_id' => $room['body']['custom_data']['botId'],
-                ]
-            );
-
-            $this->botService->sendMessage($room['body']['custom_data']['botId'], $room_name, $message);
-        }
+//        if ($room['status'] == 200) {
+//            $this->logger->debug('Rooooooom Info', array($room['body']['custom_data']['botId']));
+//            $chatkit->sendMessage(
+//                [
+//                    'sender_id' => $sender_id,
+//                    'room_id' => $room_id,
+//                    'text' => json_encode(['nlp' => [], 'type' => 'text', 'text' => $message], JSON_UNESCAPED_UNICODE),
+//                    'bot_id' => $room['body']['custom_data']['botId'],
+//                ]
+//            );
+//
+//            }
 
 
         return new JsonResponse(['success' => true], 200);
