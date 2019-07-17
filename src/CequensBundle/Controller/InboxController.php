@@ -245,15 +245,11 @@ class InboxController extends Controller
     {
         $room_id = $request->request->get('roome_id');
         $message = $request->request->get('message');
-        $room_name = '-01';
+        $room_name = $request->request->get('room_name');
         $this->logger->debug('[InboxController] $room_id '.$room_id);
         $this->logger->debug('[InboxController] $message '.$message);
-        $this->logger->debug('[InboxController] $room_name '.$room_name);
+        $this->logger->debug('[InboxController] $message '.$room_name);
         $sender_id = 'k.mohamed@cequens.com';
-        $this->logger->debug('sending to bot engine');
-        $this->botService->sendMessage('2010', $room_name, $message);
-//
-        exit;
         $chatkit = new Chatkit(
             [
                 'instance_locator' => $this->getParameter('chatkit_instance_locator'),
@@ -262,21 +258,21 @@ class InboxController extends Controller
         );
         $this->logger->debug('[InboxController] getting room by id '.$room_id);
 
-//        $room = $chatkit->getRoom(['id' => $room_id]);
-//
-//        if ($room['status'] == 200) {
-//            $this->logger->debug('Rooooooom Info', array($room['body']['custom_data']['botId']));
-//            $chatkit->sendMessage(
-//                [
-//                    'sender_id' => $sender_id,
-//                    'room_id' => $room_id,
-//                    'text' => json_encode(['nlp' => [], 'type' => 'text', 'text' => $message], JSON_UNESCAPED_UNICODE),
-//                    'bot_id' => $room['body']['custom_data']['botId'],
-//                ]
-//            );
+        $room = $chatkit->getRoom(['id' => $room_id]);
 
-            $this->botService->sendMessage('2010', $room_name, $message);
-//        }
+        if ($room['status'] == 200) {
+            $this->logger->debug('Rooooooom Info', array($room['body']['custom_data']['botId']));
+            $chatkit->sendMessage(
+                [
+                    'sender_id' => $sender_id,
+                    'room_id' => $room_id,
+                    'text' => json_encode(['nlp' => [], 'type' => 'text', 'text' => $message], JSON_UNESCAPED_UNICODE),
+                    'bot_id' => $room['body']['custom_data']['botId'],
+                ]
+            );
+
+            $this->botService->sendMessage($room['body']['custom_data']['botId'], $room_name, $message);
+        }
 
 
         return new JsonResponse(['success' => true], 200);
