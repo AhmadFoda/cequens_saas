@@ -79,7 +79,7 @@ class BotService
 
     public function sendMessage($botId, $to, $message)
     {
-        $this->logger->debug('SENDING new message action');
+        $this->logger->debug('SENDING new message action service url ');
         $this->postToApis(
             $this->container->getParameter('bot_service_url') . '/internal/message',
             [
