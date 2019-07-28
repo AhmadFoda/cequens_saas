@@ -1,6 +1,6 @@
         $(function () {
             'use strict';
-
+            var globalEmail = '';
             Handlebars.registerHelper('compared', function (lvalue, operator, rvalue, options) {
 
                 var operators, result;
@@ -126,9 +126,47 @@
                 url: `https://us1.pusherplatform.io/services/chatkit_token_provider/v1/bb957f41-bf24-4f23-a015-1f51ceafb1b2/token`
             })
 
+
+            var getloggedInUser = function () {
+                console.log('[get logged user] ...');
+                var user ="";
+                $.ajax({
+                    type: 'get',
+                    url: "http://localhost:8000/portal/inbox/getloggedagent",
+                    cache: false,
+                    async:false,
+                    timeout: 120000,
+                    success: function (response) {
+                        console.log('[get logged user=>] '+JSON.stringify(response));
+                        var res = JSON.stringify(response);
+                        var admin = JSON.stringify('admin');
+                        var admin2 = JSON.stringify("gamal");
+                        console.log("ress "+(admin2===res));
+                        if (res===admin){
+                            user = "k.mohamed@cequens.com";
+                            // globalEmail = ("k.mohamed@cequens.com");
+                        } else if(res===admin2){
+                            user =  "a.gamal@cequens.com";
+                            // globalEmail = ("a.gamal@cequens.com");
+                        }
+
+                    },
+                    error: function (response) {
+                        var res = JSON.stringify(response);
+                        console.log('Error [get logged user] '+JSON.stringify(response));
+                    }
+                });
+                console.log("user "+user);
+                return user ;
+            }
+            // var chatManager = new Chatkit.ChatManager({
+            //     instanceLocator: "v1:us1:bb957f41-bf24-4f23-a015-1f51ceafb1b2",
+            //     userId: "k.mohamed@cequens.com",
+            //     tokenProvider
+            // });
             var chatManager = new Chatkit.ChatManager({
                 instanceLocator: "v1:us1:bb957f41-bf24-4f23-a015-1f51ceafb1b2",
-                userId: "k.mohamed@cequens.com",
+                userId: getloggedInUser(),
                 tokenProvider
             });
 
@@ -180,7 +218,6 @@
                         console.log('adding new rooms to array ', roomObj);
                         self.variables.state.rooms.set('' + roomObj.id, currentUserObj.rooms[j]);
                     });
-
                     //Initialize chatkit currentUser Object
                     self.variables.state.currentUser = currentUserObj;
                 },
@@ -199,7 +236,6 @@
                     this.$emailOpened = $('[data-email="opened"]');
                     this.$listRefreshLink = $('.list-refresh');
                 },
-
                 bindEvents: function () {
                     var self = this;
 
@@ -219,6 +255,7 @@
                         $('#btn_sendMessage').attr('disabled', 'disabled');
 
                         console.log("Application base URL :: ".applicationBaseUrl);
+                        console.log("room id "+Number(self.variables.state.current_room));
                         $.ajax({
                             type: 'post',
                             url: "https://workflow.cequens.net" + "/portal/inbox/sendMessage",
@@ -561,11 +598,14 @@
 
 
                 },
-
                 addNewMessage: function (message) {
-                    var self = this;
-                    console.log('llllllllllll');
+                   var uss = "admin"
+                   console.log('[addNewMessage] '+uss);
+                   var self = this;
+                    // var usss = this.getUserAgent();
+                    // console.log('llllllllllll '+JSON.stringify(currentUser));
                     self.variables.state.current_room = message.room.id;
+                    console.log('message sender '+JSON.stringify(message));
                     console.log('data-email-d' + message.room.id);
                     var email = null;
                     var thumbnailWrapper = $('.thumbnail-wrapper');

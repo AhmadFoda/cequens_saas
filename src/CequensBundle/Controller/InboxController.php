@@ -1,7 +1,7 @@
 <?php
 
 namespace CequensBundle\Controller;
-
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use CequensBundle\Service\BotService;
 use JMS\Serializer\Handler\StdClassHandler;
 use Psr\Log\LoggerInterface;
@@ -23,7 +23,6 @@ class InboxController extends Controller
 {
     protected $botService;
     protected $logger;
-
     /**
      * AudioLibraryController constructor.
      */
@@ -235,6 +234,15 @@ class InboxController extends Controller
         return new JsonResponse($conversations);
     }
 
+    /**
+     *  @Route("/getloggedagent",name="getloggedagent")
+     * @Method("GET")
+     *  @param Request $request
+     *  @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getLoggedinUser(Request $request){
+       return new Response( $this->getUser());
+    }
     /**
      * @Route("/sendMessage", name="sendMessage")
      * @Method("POST")

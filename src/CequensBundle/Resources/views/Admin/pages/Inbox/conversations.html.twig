@@ -280,7 +280,7 @@
                                                                                         <div class="form-group">
                                                                                             <label class="col-md-4 control-label" for="action_json">Attachment</label>
                                                                                             <div class="col-md-4">
-                                                                                                <input type="file" id="image" name="action_json" class="input-file list-image"  accept=".png,.jpg,.jpeg">
+                                                                                                <input onchange="uploadFile(this)" type="file" id="image" name="action_json" class="input-file list-image"  accept=".png,.jpg,.jpeg">
                                                                                             </div>
                                                                                         </div>
 
@@ -484,7 +484,7 @@
                     }
                 },
                 error: function (response) {
-                    alert('Error while sending msgxxxxx '+JSON.stringify(response) );
+//                    alert('Error while sending msgxxxxx '+JSON.stringify(response) );
                 }
             });
         }
@@ -566,6 +566,35 @@
 
             return dataformatted;
 
+        }
+
+        function uploadFile(element){
+            console.log('uploading file .... ');
+            var file = element.files[0];
+            if(file != undefined){
+                console.log('file is un defined');
+                formData= new FormData();
+                if(!!file.type.match(/image.*/)){
+                    formData.append("image", file);
+                    return $.ajax({
+                        url: "http://chatbots2.cequens.net/testupload?fileName="+file.name,
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        // success: function(data){
+                        //     alert('success');
+                        // },
+                        // error:function (data) {
+                        //     alert('error data '+JSON.stringify(data) )
+                        // }
+                    });
+                }else{
+                    alert('Not a valid image!');
+                }
+            }else{
+                alert('Input something!');
+            }
         }
 
         // function formatImageData(parent){
@@ -769,26 +798,26 @@
                 //     console.log(data);
                 //     sendData(data);
                 // });
+                files.map(function(item , index){
+                    data.interactiveData.data.listPicker.sections[index].items.map(function(row, index){
+                        //var formData  = new FormData();
+                        //formData.append("fileGamed" , item);
 
-                readAsDataURL(files).then(function(res){
-
-                    console.log("succceesss "+data);
-                })
-                    .catch(function(err){
-                        console.log("Exception "+JSON.stringify(err));
+                        row.imageIdentifier = "http://chatbots2.cequens.net/"+ item.name ;
                     })
-                    .finally(function () {
-                        files.map(function(item , index){
-                            data.interactiveData.data.listPicker.sections[index].items.map(function(row, index){
-                                //var formData  = new FormData();
-                                //formData.append("fileGamed" , item);
+                });
+                sendData(data);
 
-                                row.imageIdentifier = "http://chatbots2.cequens.net/"+ item.name ;
-                            })
-                        });
-                        sendData(data);
-
-                    });
+//                readAsDataURL(files).then(function(res){
+//
+//                    console.log("succceesss "+data);
+//                })
+//                    .catch(function(err){
+//                        console.log("Exception "+JSON.stringify(err));
+//                    })
+//                    .finally(function () {
+//
+//                    });
 
             });
 
@@ -967,7 +996,7 @@
                     ' <div class="form-group">\n'+
                     '                              <label class="col-md-4 control-label" for="action_json">Attachment</label>\n'+
                     '                              <div class="col-md-4">\n'+
-                    '                              <input type="file" id="image" name="action_json" class="input-file list-image" accept=".png,.jpg,.jpeg">\n'+
+                    '                              <input onchange="uploadFile(this)" type="file" id="image" name="action_json" class="input-file list-image" accept=".png,.jpg,.jpeg">\n'+
                     '                              </div>\n'+
                     '                              </div>' +
                     '</div>';
