@@ -29,6 +29,7 @@ class InboxController extends Controller
 
     public function __construct(BotService $botService, LoggerInterface $logger)
     {
+        // test commit pipeline
         $this->botService = $botService;
         $this->logger = $logger;
     }
@@ -241,7 +242,7 @@ class InboxController extends Controller
      *  @return \Symfony\Component\HttpFoundation\Response
      */
     public function getLoggedinUser(Request $request){
-       return new Response( $this->getUser());
+        return new Response( $this->getUser());
     }
     /**
      * @Route("/sendMessage", name="sendMessage")
