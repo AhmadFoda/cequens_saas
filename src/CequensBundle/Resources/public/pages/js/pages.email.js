@@ -126,7 +126,8 @@ $(function () {
         url: `https://us1.pusherplatform.io/services/chatkit_token_provider/v1/bb957f41-bf24-4f23-a015-1f51ceafb1b2/token`
     })
 
-    var chatManager = new Chatkit.ChatManager({
+    var chatManager = new Chatkit.
+    ChatManager({
         instanceLocator: "v1:us1:bb957f41-bf24-4f23-a015-1f51ceafb1b2",
         userId: "k.mohamed@cequens.com",
         tokenProvider

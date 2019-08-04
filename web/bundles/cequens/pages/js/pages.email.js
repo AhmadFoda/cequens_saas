@@ -125,7 +125,41 @@
             var tokenProvider = new Chatkit.TokenProvider({
                 url: `https://us1.pusherplatform.io/services/chatkit_token_provider/v1/bb957f41-bf24-4f23-a015-1f51ceafb1b2/token`
             })
+            var test = function () {
+                console.log('cecho is working sofar :) ');
 
+            }
+
+            setInterval(function(){
+                console.log('is user typing ()');
+                $.ajax({
+                    type:'GET',
+                    url:'http://chatbots2.cequens.net/istyping',
+                    timeout:120000,
+                    cache:false,
+                    success: function (response) {
+                        var status =response.data;
+                        console.log('SUCCESS'+status);
+                        if (status.toString().trim() === 'typing'){
+                        // show the gif of typing
+
+                            console.log('check is typing ... ');
+
+                            document.getElementById("typingindicator").style.visibility = 'visible';
+                     } else if (status.trim().toString()==='not_typing'){
+
+                            console.log('check is not typing ... ');
+
+                         // hide the typing gif
+
+                            document.getElementById("typingindicator").style.visibility = 'hidden';
+                        }
+                    },error:function (response) {
+                        console.log('isCustomerTyping error result '+JSON.stringify(response));
+                    }
+                })  ;
+
+            },2 * 1000);
 
             var getloggedInUser = function () {
                 console.log('[get logged user] ...');
@@ -344,7 +378,6 @@
                         self.variables.state.current_room_obj = self.variables.state.rooms.get($(this).attr('data-email-index'));
                         console.log('current_room_obj', self.variables.state.current_room_obj);
                         console.log('current_room obj', self.variables.state.current_room);
-
                         //Subscribe to room and fetch last 100 messages
                         self.variables.state.currentUser.subscribeToRoom({
                             roomId: self.variables.state.current_room,
@@ -358,7 +391,6 @@
                         }).catch(err => {
                             console.log(`Error subscribing to  room : ${err}`)
                         });
-                        self.variables.state.current_user_typing_publish = true;
 
                         // initialize autoreply
                         var autoreplyList = $.map(self.constants.emojis, function(value, i) {
@@ -442,7 +474,20 @@
                     // Update Secondary Menu Counters every 4 seconds
                     setInterval(self.updateCounters.bind(self), 4 * 1000);
 
+                    // setTypingInterval (self.updateCounters.bind(self), 4 * 1000);
+                    // setTypingInterval(function () {
+                    //     var link = document.getElementById("typingIndicator");
+                    //     link.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild
+                    //     (link.parentNode.parentNode.parentNode.parentNode);
+                    //
+                    // })
+                    //     .catch(err => {
+                    //         console.log('Error getting joinable rooms: ', err);
+                    // })
+                    // }, 2 * 1000);
                     // Update unassigned rooms array every 10 seconds
+
+
                     setInterval(function () {
                         self.variables.state.user.getJoinableRooms()
                             .then(rooms => {
